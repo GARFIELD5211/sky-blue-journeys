@@ -2,29 +2,40 @@ import PackageComparison from "@/components/PackageComparison";
 import LeadForm from "@/components/LeadForm";
 import umrahImg from "@/assets/umrah-bg.jpg";
 import { Landmark, Hotel, Bus, BookOpen, Calendar } from "lucide-react";
+import { usePackages } from "@/hooks/useGoogleSheets";
+import type { PackageData } from "@/lib/googleSheets";
+
+const fallbackPackages: PackageData[] = [
+  {
+    name: "Economy", price: "$1,800", duration: "10 Days", highlight: false,
+    features: [
+      { label: "Return Flights (Economy)", included: true },
+      { label: "Umrah Visa", included: true },
+      { label: "3-Star Hotel Makkah", included: true },
+      { label: "3-Star Hotel Madinah", included: true },
+      { label: "Shared Transport", included: true },
+      { label: "Group Ziyarat", included: true },
+      { label: "Full Board Meals", included: false },
+      { label: "Private Guide", included: false },
+    ],
+  },
+  {
+    name: "Premium", price: "$4,500", duration: "14 Days", highlight: true,
+    features: [
+      { label: "Return Flights (Business)", included: true },
+      { label: "Umrah Visa", included: true },
+      { label: "5-Star Hotel Makkah (Haram View)", included: true },
+      { label: "5-Star Hotel Madinah", included: true },
+      { label: "Private Luxury Transport", included: true },
+      { label: "Private Guided Ziyarat", included: true },
+      { label: "Full Board Gourmet Meals", included: true },
+      { label: "24/7 Personal Concierge", included: true },
+    ],
+  },
+];
 
 const UmrahPackages = () => {
-  const economyFeatures = [
-    { label: "Return Flights (Economy)", included: true },
-    { label: "Umrah Visa", included: true },
-    { label: "3-Star Hotel Makkah", included: true },
-    { label: "3-Star Hotel Madinah", included: true },
-    { label: "Shared Transport", included: true },
-    { label: "Group Ziyarat", included: true },
-    { label: "Full Board Meals", included: false },
-    { label: "Private Guide", included: false },
-  ];
-
-  const premiumFeatures = [
-    { label: "Return Flights (Business)", included: true },
-    { label: "Umrah Visa", included: true },
-    { label: "5-Star Hotel Makkah (Haram View)", included: true },
-    { label: "5-Star Hotel Madinah", included: true },
-    { label: "Private Luxury Transport", included: true },
-    { label: "Private Guided Ziyarat", included: true },
-    { label: "Full Board Gourmet Meals", included: true },
-    { label: "24/7 Personal Concierge", included: true },
-  ];
+  const packages = usePackages("Umrah", fallbackPackages);
 
   return (
     <main className="pt-20">
@@ -62,13 +73,7 @@ const UmrahPackages = () => {
 
       <section className="section-padding" style={{ background: "hsl(var(--section-alt))" }}>
         <div className="container mx-auto">
-          <PackageComparison
-            title="Compare Umrah Packages"
-            packages={[
-              { name: "Economy", price: "$1,800", duration: "10 Days", features: economyFeatures },
-              { name: "Premium", price: "$4,500", duration: "14 Days", features: premiumFeatures, highlight: true },
-            ]}
-          />
+          <PackageComparison title="Compare Umrah Packages" packages={packages} />
         </div>
       </section>
 
