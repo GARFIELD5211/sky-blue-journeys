@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Plane, Search, Phone } from "lucide-react";
+import { Menu, X, Search, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoWide from "@/assets/logo-wide.jpeg";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -19,14 +20,8 @@ const Navbar = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between h-16 md:h-20 px-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-full gradient-primary flex items-center justify-center">
-            <Plane className="w-5 h-5 text-primary-foreground" />
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-lg font-bold tracking-tight text-foreground">Lancer</span>
-            <span className="text-[10px] font-medium text-muted-foreground -mt-1">Travel & Tours</span>
-          </div>
+        <Link to="/" className="flex items-center">
+          <img src={logoWide} alt="Lancer Travel & Tours" className="h-10 md:h-12 w-auto object-contain" />
         </Link>
 
         {/* Desktop Nav */}

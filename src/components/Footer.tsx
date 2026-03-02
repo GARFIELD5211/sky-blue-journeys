@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Plane, Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import logoBadge from "@/assets/logo-badge.jpeg";
 
 const Footer = () => {
   return (
@@ -8,10 +9,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-full gradient-primary flex items-center justify-center">
-                <Plane className="w-5 h-5" />
-              </div>
+            <div className="flex items-center gap-3 mb-4">
+              <img src={logoBadge} alt="Lancer Travel & Tours" className="w-14 h-14 rounded-full object-contain" />
               <div>
                 <span className="text-lg font-bold">Lancer</span>
                 <p className="text-xs text-primary-foreground/60 -mt-0.5">Travel & Tours</p>
