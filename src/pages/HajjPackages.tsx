@@ -2,44 +2,57 @@ import PackageComparison from "@/components/PackageComparison";
 import LeadForm from "@/components/LeadForm";
 import heroImg from "@/assets/hero-hajj.jpg";
 import { Landmark, Hotel, UtensilsCrossed, Bus, BookOpen } from "lucide-react";
+import { usePackages } from "@/hooks/useGoogleSheets";
+import type { PackageData } from "@/lib/googleSheets";
 
-const hajjFeatures = [
-  { label: "Return Flights", included: true },
-  { label: "Hajj Visa Processing", included: true },
-  { label: "Mina & Arafat Tent", included: true },
-  { label: "Guided Ziyarat", included: true },
-  { label: "3-Star Hotel Makkah", included: true },
-  { label: "3-Star Hotel Madinah", included: true },
-  { label: "Full Board Meals", included: false },
-  { label: "VIP Transport", included: false },
-  { label: "5-Star Hotels", included: false },
-];
-
-const hajjPremium = [
-  { label: "Return Flights (Business)", included: true },
-  { label: "Hajj Visa Processing", included: true },
-  { label: "VIP Mina & Arafat Tent", included: true },
-  { label: "Private Guided Ziyarat", included: true },
-  { label: "5-Star Hotel Makkah (Haram View)", included: true },
-  { label: "5-Star Hotel Madinah", included: true },
-  { label: "Full Board Gourmet Meals", included: true },
-  { label: "VIP Private Transport", included: true },
-  { label: "24/7 Concierge Support", included: true },
-];
-
-const hajjStandard = [
-  { label: "Return Flights", included: true },
-  { label: "Hajj Visa Processing", included: true },
-  { label: "Standard Mina Tent", included: true },
-  { label: "Group Ziyarat", included: true },
-  { label: "4-Star Hotel Makkah", included: true },
-  { label: "4-Star Hotel Madinah", included: true },
-  { label: "Breakfast & Dinner", included: true },
-  { label: "Shared Transport", included: true },
-  { label: "24/7 Concierge Support", included: false },
+const fallbackPackages: PackageData[] = [
+  {
+    name: "Economy", price: "$4,500", duration: "21 Days", highlight: false,
+    features: [
+      { label: "Return Flights", included: true },
+      { label: "Hajj Visa Processing", included: true },
+      { label: "Mina & Arafat Tent", included: true },
+      { label: "Guided Ziyarat", included: true },
+      { label: "3-Star Hotel Makkah", included: true },
+      { label: "3-Star Hotel Madinah", included: true },
+      { label: "Full Board Meals", included: false },
+      { label: "VIP Transport", included: false },
+      { label: "5-Star Hotels", included: false },
+    ],
+  },
+  {
+    name: "Standard", price: "$6,500", duration: "21 Days", highlight: true,
+    features: [
+      { label: "Return Flights", included: true },
+      { label: "Hajj Visa Processing", included: true },
+      { label: "Standard Mina Tent", included: true },
+      { label: "Group Ziyarat", included: true },
+      { label: "4-Star Hotel Makkah", included: true },
+      { label: "4-Star Hotel Madinah", included: true },
+      { label: "Breakfast & Dinner", included: true },
+      { label: "Shared Transport", included: true },
+      { label: "24/7 Concierge Support", included: false },
+    ],
+  },
+  {
+    name: "Premium", price: "$12,000", duration: "25 Days", highlight: false,
+    features: [
+      { label: "Return Flights (Business)", included: true },
+      { label: "Hajj Visa Processing", included: true },
+      { label: "VIP Mina & Arafat Tent", included: true },
+      { label: "Private Guided Ziyarat", included: true },
+      { label: "5-Star Hotel Makkah (Haram View)", included: true },
+      { label: "5-Star Hotel Madinah", included: true },
+      { label: "Full Board Gourmet Meals", included: true },
+      { label: "VIP Private Transport", included: true },
+      { label: "24/7 Concierge Support", included: true },
+    ],
+  },
 ];
 
 const HajjPackages = () => {
+  const packages = usePackages("Hajj", fallbackPackages);
+
   return (
     <main className="pt-20">
       {/* Hero */}
@@ -79,14 +92,7 @@ const HajjPackages = () => {
       {/* Package Comparison */}
       <section className="section-padding" style={{ background: "hsl(var(--section-alt))" }}>
         <div className="container mx-auto">
-          <PackageComparison
-            title="Compare Hajj Packages"
-            packages={[
-              { name: "Economy", price: "$4,500", duration: "21 Days", features: hajjFeatures },
-              { name: "Standard", price: "$6,500", duration: "21 Days", features: hajjStandard, highlight: true },
-              { name: "Premium", price: "$12,000", duration: "25 Days", features: hajjPremium },
-            ]}
-          />
+          <PackageComparison title="Compare Hajj Packages" packages={packages} />
         </div>
       </section>
 

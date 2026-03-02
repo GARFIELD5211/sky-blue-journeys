@@ -1,18 +1,11 @@
 import { useState } from "react";
 import { Globe, Briefcase, Wrench, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import LeadModal from "@/components/LeadModal";
 import visaImg from "@/assets/visa-dubai.jpg";
+import { useVisas } from "@/hooks/useGoogleSheets";
+import type { VisaData } from "@/lib/googleSheets";
 
-interface VisaCountry {
-  country: string;
-  flag: string;
-  types: string[];
-  processingTime: string;
-  successRate: string;
-}
-
-const countries: VisaCountry[] = [
+const fallbackCountries: VisaData[] = [
   { country: "UAE / Dubai", flag: "🇦🇪", types: ["Tourist", "Business", "Work"], processingTime: "3-5 Days", successRate: "99%" },
   { country: "Saudi Arabia", flag: "🇸🇦", types: ["Visit", "Business", "Work"], processingTime: "5-7 Days", successRate: "98%" },
   { country: "United Kingdom", flag: "🇬🇧", types: ["Tourist", "Student", "Work"], processingTime: "15-20 Days", successRate: "95%" },
@@ -29,6 +22,7 @@ const visaTypes = [
 
 const VisaServices = () => {
   const [modal, setModal] = useState<{ open: boolean; country?: string }>({ open: false });
+  const countries = useVisas(fallbackCountries);
 
   return (
     <main className="pt-20">
