@@ -67,31 +67,33 @@ const VisaServices = () => {
             <h2 className="text-3xl font-bold text-foreground">Country-Specific Visas</h2>
             <p className="text-muted-foreground mt-2">Click any country to start your application</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {countries.map((c) => (
-              <button
-                key={c.country}
-                onClick={() => setModal({ open: true, country: c.country })}
-                className="glass-card-hover rounded-2xl p-6 text-left w-full"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-4xl">{c.flag}</span>
-                  <div>
-                    <h3 className="font-bold text-foreground">{c.country}</h3>
-                    <p className="text-xs text-muted-foreground">{c.processingTime} processing</p>
+          <div className="overflow-x-auto pb-4 -mx-4 px-4">
+            <div className="flex gap-6" style={{ minWidth: "max-content" }}>
+              {countries.map((c) => (
+                <button
+                  key={c.country}
+                  onClick={() => setModal({ open: true, country: c.country })}
+                  className="glass-card-hover rounded-2xl p-6 text-left w-72 shrink-0"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl">{c.flag}</span>
+                    <div>
+                      <h3 className="font-bold text-foreground">{c.country}</h3>
+                      <p className="text-xs text-muted-foreground">{c.processingTime} processing</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {c.types.map((t) => (
-                    <span key={t} className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-accent text-accent-foreground">{t}</span>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-primary">{c.successRate} Success Rate</span>
-                  <ArrowRight className="w-4 h-4 text-primary" />
-                </div>
-              </button>
-            ))}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {c.types.map((t) => (
+                      <span key={t} className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-accent text-accent-foreground">{t}</span>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-primary">{c.successRate} Success Rate</span>
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
