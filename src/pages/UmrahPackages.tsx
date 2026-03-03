@@ -73,7 +73,56 @@ const UmrahPackages = () => {
 
       <section className="section-padding" style={{ background: "hsl(var(--section-alt))" }}>
         <div className="container mx-auto">
-          <PackageComparison title="Compare Umrah Packages" packages={packages} />
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Compare Umrah Packages</h2>
+          <div className="overflow-x-auto pb-4 -mx-4 px-4">
+            <div className="flex gap-6" style={{ minWidth: "max-content" }}>
+              {packages.map((pkg) => (
+                <div
+                  key={pkg.name}
+                  className={`w-80 shrink-0 rounded-2xl overflow-hidden ${
+                    pkg.highlight
+                      ? "ring-2 ring-primary shadow-xl shadow-primary/10 glass-card"
+                      : "glass-card"
+                  }`}
+                >
+                  {pkg.highlight && (
+                    <div className="gradient-primary text-primary-foreground text-center text-xs font-bold py-1.5 tracking-wider uppercase">
+                      Most Popular
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-foreground mb-1">{pkg.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{pkg.duration}</p>
+                    <div className="mb-6">
+                      <span className="text-3xl font-extrabold text-foreground">{pkg.price}</span>
+                      <span className="text-sm text-muted-foreground"> / person</span>
+                    </div>
+                    <ul className="space-y-3 mb-6">
+                      {pkg.features.map((f) => (
+                        <li key={f.label} className="flex items-center gap-2.5 text-sm">
+                          {f.included ? (
+                            <span className="w-4 h-4 text-primary shrink-0">✓</span>
+                          ) : (
+                            <span className="w-4 h-4 text-muted-foreground/40 shrink-0">✕</span>
+                          )}
+                          <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>{f.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a href="/contact">
+                      <button className={`w-full py-2.5 rounded-lg font-semibold text-sm ${
+                        pkg.highlight
+                          ? "gradient-urgent text-destructive-foreground"
+                          : "gradient-primary text-primary-foreground"
+                      }`}>
+                        Book Now
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
