@@ -12,6 +12,7 @@ import HajjPackages from "./pages/HajjPackages";
 import UmrahPackages from "./pages/UmrahPackages";
 import VisaServices from "./pages/VisaServices";
 import Contact from "./pages/Contact";
+import FlightSearch from "./pages/FlightSearch";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/hajj" element={<HajjPackages />} />
             <Route path="/umrah" element={<UmrahPackages />} />
             <Route path="/visas" element={<VisaServices />} />
+            <Route path="/flights" element={<FlightSearch />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

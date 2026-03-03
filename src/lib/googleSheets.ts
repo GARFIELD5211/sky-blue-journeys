@@ -91,6 +91,19 @@ export interface VisaData {
   successRate: string;
 }
 
+export interface FlightData {
+  from: string;
+  to: string;
+  airline: string;
+  departDate: string;
+  arriveDate: string;
+  departTime: string;
+  arriveTime: string;
+  price: string;
+  class: string;
+  stops: string;
+}
+
 /**
  * Fetch package data from a Google Sheet tab.
  * Expected columns: Package, Price, Duration, Highlight, Feature, Included
@@ -185,4 +198,49 @@ function isTruthy(val: string | undefined): boolean {
   if (!val) return false;
   const v = val.toLowerCase().trim();
   return v === "yes" || v === "true" || v === "1";
+}
+
+/**
+ * Fetch flight data from the "Flights" tab.
+ * Expected columns: From, To, Airline, DepartDate, ArriveDate, DepartTime, ArriveTime, Price, Class, Stops
+ */
+export async function fetchFlights(): Promise<FlightData[]> {
+  if (!GOOGLE_SHEET_ID) return [];
+
+  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Flights");
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch flights sheet: ${res.status}`);
+
+  const csv = await res.text();
+  const rows = parseCSV(csv);
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map((h) => h.toLowerCase().replace(/\s+/g, "").trim());
+  const fromIdx = headers.indexOf("from");
+  const toIdx = headers.indexOf("to");
+  const airlineIdx = headers.indexOf("airline");
+  const ddIdx = headers.indexOf("departdate");
+  const adIdx = headers.indexOf("arrivedate");
+  const dtIdx = headers.indexOf("departtime");
+  const atIdx = headers.indexOf("arrivetime");
+  const priceIdx = headers.indexOf("price");
+  const classIdx = headers.indexOf("class");
+  const stopsIdx = headers.indexOf("stops");
+
+  if (fromIdx === -1 || toIdx === -1) return [];
+
+  return rows.slice(1)
+    .filter((r) => r[fromIdx] && r[toIdx])
+    .map((r) => ({
+      from: r[fromIdx] || "",
+      to: r[toIdx] || "",
+      airline: r[airlineIdx] || "",
+      departDate: r[ddIdx] || "",
+      arriveDate: r[adIdx] || "",
+      departTime: r[dtIdx] || "",
+      arriveTime: r[atIdx] || "",
+      price: r[priceIdx] || "",
+      class: r[classIdx] || "",
+      stops: r[stopsIdx] || "",
+    }));
 }

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Calendar, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,6 +7,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import heroImg from "@/assets/hero-hajj.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const [destination, setDestination] = useState("");
+  const [packageType, setPackageType] = useState("");
+  const [travelDate, setTravelDate] = useState("");
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (destination) params.set("to", destination);
+    if (packageType) params.set("type", packageType);
+    if (travelDate) params.set("date", travelDate);
+
+    if (packageType === "hajj") navigate(`/hajj`);
+    else if (packageType === "umrah") navigate(`/umrah`);
+    else if (packageType === "visa") navigate(`/visas`);
+    else navigate(`/flights?${params.toString()}`);
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center">
       {/* Background */}
@@ -36,7 +55,7 @@ const HeroSection = () => {
               <label className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5" /> Destination
               </label>
-              <Select>
+              <Select value={destination} onValueChange={setDestination}>
                 <SelectTrigger className="bg-background/50"><SelectValue placeholder="Where to?" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="makkah">Makkah</SelectItem>
@@ -51,7 +70,7 @@ const HeroSection = () => {
               <label className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
                 <Briefcase className="w-3.5 h-3.5" /> Package Type
               </label>
-              <Select>
+              <Select value={packageType} onValueChange={setPackageType}>
                 <SelectTrigger className="bg-background/50"><SelectValue placeholder="Service" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="hajj">Hajj Package</SelectItem>
@@ -65,10 +84,10 @@ const HeroSection = () => {
               <label className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5" /> Travel Date
               </label>
-              <Input type="date" className="bg-background/50" />
+              <Input type="date" className="bg-background/50" value={travelDate} onChange={e => setTravelDate(e.target.value)} />
             </div>
             <div className="flex items-end">
-              <Button className="w-full h-10 gradient-primary border-0 text-primary-foreground hover:opacity-90 gap-2 font-semibold">
+              <Button onClick={handleSearch} className="w-full h-10 gradient-primary border-0 text-primary-foreground hover:opacity-90 gap-2 font-semibold">
                 <Search className="w-4 h-4" /> Search
               </Button>
             </div>
