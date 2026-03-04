@@ -29,7 +29,7 @@
  */
 
 // ⚠️ REPLACE THIS with your actual Google Sheet ID
-export const GOOGLE_SHEET_ID = "";
+export const GOOGLE_SHEET_ID = "13cl13WG0FEXmW5LsAUB5UYe-2S3fOABotQGrlSSzYiU";
 
 const SHEET_CSV_URL = (sheetId: string, tabName: string) =>
   `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
