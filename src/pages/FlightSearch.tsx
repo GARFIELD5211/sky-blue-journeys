@@ -6,19 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { FlightData } from "@/lib/googleSheets";
-
-const fallbackFlights: FlightData[] = [
-  { from: "Islamabad (ISB)", to: "Madinah (MED)", airline: "Fly Jinnah", departDate: "2026-03-02", arriveDate: "2026-03-02", departTime: "01:00", arriveTime: "13:20", price: "PKR 104,909", class: "Economy", stops: "1 Stop" },
-  { from: "Lahore (LHE)", to: "Jeddah (JED)", airline: "PIA", departDate: "2026-03-15", arriveDate: "2026-03-15", departTime: "08:00", arriveTime: "12:30", price: "PKR 125,000", class: "Economy", stops: "Direct" },
-  { from: "Karachi (KHI)", to: "Dubai (DXB)", airline: "Emirates", departDate: "2026-03-20", arriveDate: "2026-03-20", departTime: "14:00", arriveTime: "16:00", price: "PKR 98,500", class: "Economy", stops: "Direct" },
-  { from: "Islamabad (ISB)", to: "Istanbul (IST)", airline: "Turkish Airlines", departDate: "2026-04-10", arriveDate: "2026-04-10", departTime: "06:00", arriveTime: "12:00", price: "PKR 185,000", class: "Business", stops: "Direct" },
-  { from: "Karachi (KHI)", to: "London (LHR)", airline: "PIA", departDate: "2026-04-15", arriveDate: "2026-04-15", departTime: "22:00", arriveTime: "06:00", price: "PKR 210,000", class: "Economy", stops: "1 Stop" },
-];
 
 const FlightSearch = () => {
   const [searchParams] = useSearchParams();
-  const flights = useFlights(fallbackFlights);
+  const { flights, isLoading } = useFlights();
 
   // Search state
   const [tripType, setTripType] = useState("oneway");
