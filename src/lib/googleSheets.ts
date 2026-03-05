@@ -31,18 +31,10 @@
 // ⚠️ REPLACE THIS with your actual Google Sheet ID
 export const GOOGLE_SHEET_ID = "13cl13WG0FEXmW5LsAUB5UYe-2S3fOABotQGrlSSzYiU";
 
-// Use the published export URL format which works with "Publish to web"
+// Two URL strategies: gviz (requires public share) and pub (requires publish to web with gid)
 const SHEET_CSV_URL = (sheetId: string, tabName: string) => {
-  // Map tab names to gid values - update these if your sheet tab order changes
-  const tabGids: Record<string, string> = {
-    "Hajj": "0",
-    "Umrah": "1",
-    "Visas": "2",
-    "Flights": "3",
-    "Tours": "4",
-  };
-  const gid = tabGids[tabName] || "0";
-  return `https://docs.google.com/spreadsheets/d/e/2PACX-1vRBqNF_PZrCVnwWHf98CAtmOir4cXsGgiQNupWYjQjt47mJurmf0Cf4YkxefyVy2Ru_X2az8c-PTPQL/pub?gid=${gid}&single=true&output=csv`;
+  // Primary: gviz URL uses tab name directly (requires "Anyone with the link" sharing)
+  return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
 };
 
 function parseCSV(csv: string): string[][] {
