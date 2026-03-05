@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchPackages, fetchVisas, fetchFlights, GOOGLE_SHEET_ID, type PackageData, type VisaData, type FlightData } from "@/lib/googleSheets";
+import { fetchPackages, fetchVisas, fetchFlights, fetchTours, GOOGLE_SHEET_ID, type PackageData, type VisaData, type FlightData, type TourData } from "@/lib/googleSheets";
 
-export function usePackages(tabName: string, fallback: PackageData[]) {
-  const { data } = useQuery({
+export function usePackages(tabName: string) {
+  const { data, isLoading } = useQuery({
     queryKey: ["packages", tabName],
     queryFn: () => fetchPackages(tabName),
     enabled: !!GOOGLE_SHEET_ID,
@@ -10,11 +10,11 @@ export function usePackages(tabName: string, fallback: PackageData[]) {
     refetchInterval: 60_000,
   });
 
-  return data && data.length > 0 ? data : fallback;
+  return { packages: data || [], isLoading };
 }
 
-export function useVisas(fallback: VisaData[]) {
-  const { data } = useQuery({
+export function useVisas() {
+  const { data, isLoading } = useQuery({
     queryKey: ["visas"],
     queryFn: fetchVisas,
     enabled: !!GOOGLE_SHEET_ID,
@@ -22,11 +22,11 @@ export function useVisas(fallback: VisaData[]) {
     refetchInterval: 60_000,
   });
 
-  return data && data.length > 0 ? data : fallback;
+  return { visas: data || [], isLoading };
 }
 
-export function useFlights(fallback: FlightData[]) {
-  const { data } = useQuery({
+export function useFlights() {
+  const { data, isLoading } = useQuery({
     queryKey: ["flights"],
     queryFn: fetchFlights,
     enabled: !!GOOGLE_SHEET_ID,
@@ -34,5 +34,17 @@ export function useFlights(fallback: FlightData[]) {
     refetchInterval: 60_000,
   });
 
-  return data && data.length > 0 ? data : fallback;
+  return { flights: data || [], isLoading };
+}
+
+export function useTours() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["tours"],
+    queryFn: fetchTours,
+    enabled: !!GOOGLE_SHEET_ID,
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+
+  return { tours: data || [], isLoading };
 }
