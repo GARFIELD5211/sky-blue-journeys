@@ -39,6 +39,7 @@ const SHEET_CSV_URL = (sheetId: string, tabName: string) => {
     "Umrah": "1",
     "Visas": "2",
     "Flights": "3",
+    "Tours": "4",
   };
   const gid = tabGids[tabName] || "0";
   return `https://docs.google.com/spreadsheets/d/e/2PACX-1vRBqNF_PZrCVnwWHf98CAtmOir4cXsGgiQNupWYjQjt47mJurmf0Cf4YkxefyVy2Ru_X2az8c-PTPQL/pub?gid=${gid}&single=true&output=csv`;
