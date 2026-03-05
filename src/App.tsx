@@ -11,6 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Index from "./pages/Index";
 import HajjPackages from "./pages/HajjPackages";
 import UmrahPackages from "./pages/UmrahPackages";
+import Tours from "./pages/Tours";
 import VisaServices from "./pages/VisaServices";
 import Contact from "./pages/Contact";
 import FlightSearch from "./pages/FlightSearch";
