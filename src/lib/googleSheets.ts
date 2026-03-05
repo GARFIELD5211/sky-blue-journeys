@@ -31,17 +31,10 @@
 // ⚠️ REPLACE THIS with your actual Google Sheet ID
 export const GOOGLE_SHEET_ID = "13cl13WG0FEXmW5LsAUB5UYe-2S3fOABotQGrlSSzYiU";
 
-// Use the published export URL format which works with "Publish to web"
+// Two URL strategies: gviz (requires public share) and pub (requires publish to web with gid)
 const SHEET_CSV_URL = (sheetId: string, tabName: string) => {
-  // Map tab names to gid values - update these if your sheet tab order changes
-  const tabGids: Record<string, string> = {
-    "Hajj": "0",
-    "Umrah": "1",
-    "Visas": "2",
-    "Flights": "3",
-  };
-  const gid = tabGids[tabName] || "0";
-  return `https://docs.google.com/spreadsheets/d/e/2PACX-1vRBqNF_PZrCVnwWHf98CAtmOir4cXsGgiQNupWYjQjt47mJurmf0Cf4YkxefyVy2Ru_X2az8c-PTPQL/pub?gid=${gid}&single=true&output=csv`;
+  // Primary: gviz URL uses tab name directly (requires "Anyone with the link" sharing)
+  return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
 };
 
 function parseCSV(csv: string): string[][] {
@@ -114,6 +107,17 @@ export interface FlightData {
   stops: string;
 }
 
+export interface TourData {
+  name: string;
+  destination: string;
+  price: string;
+  duration: string;
+  description: string;
+  highlights: string[];
+  included: string[];
+  image: string;
+}
+
 /**
  * Fetch package data from a Google Sheet tab.
  * Expected columns: Package, Price, Duration, Highlight, Feature, Included
@@ -176,7 +180,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
 export async function fetchVisas(): Promise<VisaData[]> {
   if (!GOOGLE_SHEET_ID) return [];
 
-  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Visas");
+  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Visa");
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch visas sheet: ${res.status}`);
 
@@ -252,5 +256,46 @@ export async function fetchFlights(): Promise<FlightData[]> {
       price: r[priceIdx] || "",
       class: r[classIdx] || "",
       stops: r[stopsIdx] || "",
+    }));
+}
+
+/**
+ * Fetch tour data from the "Tours" tab.
+ * Expected columns: Name, Destination, Price, Duration, Description, Highlights, Included, Image
+ */
+export async function fetchTours(): Promise<TourData[]> {
+  if (!GOOGLE_SHEET_ID) return [];
+
+  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Tours");
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch tours sheet: ${res.status}`);
+
+  const csv = await res.text();
+  const rows = parseCSV(csv);
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map((h) => h.toLowerCase().replace(/\s+/g, "").trim());
+  const nameIdx = headers.indexOf("name");
+  const destIdx = headers.findIndex((h) => h.includes("destination"));
+  const priceIdx = headers.indexOf("price");
+  const durIdx = headers.indexOf("duration");
+  const descIdx = headers.findIndex((h) => h.includes("description"));
+  const highIdx = headers.findIndex((h) => h.includes("highlights"));
+  const inclIdx = headers.findIndex((h) => h.includes("included"));
+  const imgIdx = headers.findIndex((h) => h.includes("image"));
+
+  if (nameIdx === -1) return [];
+
+  return rows.slice(1)
+    .filter((r) => r[nameIdx])
+    .map((r) => ({
+      name: r[nameIdx] || "",
+      destination: destIdx !== -1 ? r[destIdx] || "" : "",
+      price: priceIdx !== -1 ? r[priceIdx] || "" : "",
+      duration: durIdx !== -1 ? r[durIdx] || "" : "",
+      description: descIdx !== -1 ? r[descIdx] || "" : "",
+      highlights: highIdx !== -1 ? (r[highIdx] || "").split(",").map(s => s.trim()).filter(Boolean) : [],
+      included: inclIdx !== -1 ? (r[inclIdx] || "").split(",").map(s => s.trim()).filter(Boolean) : [],
+      image: imgIdx !== -1 ? r[imgIdx] || "" : "",
     }));
 }

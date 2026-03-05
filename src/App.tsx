@@ -11,6 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Index from "./pages/Index";
 import HajjPackages from "./pages/HajjPackages";
 import UmrahPackages from "./pages/UmrahPackages";
+import Tours from "./pages/Tours";
 import VisaServices from "./pages/VisaServices";
 import Contact from "./pages/Contact";
 import FlightSearch from "./pages/FlightSearch";
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/hajj" element={<HajjPackages />} />
             <Route path="/umrah" element={<UmrahPackages />} />
+            <Route path="/tours" element={<Tours />} />
             <Route path="/visas" element={<VisaServices />} />
             <Route path="/flights" element={<FlightSearch />} />
             <Route path="/contact" element={<Contact />} />

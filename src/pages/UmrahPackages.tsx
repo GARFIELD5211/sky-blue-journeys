@@ -1,41 +1,13 @@
-import PackageComparison from "@/components/PackageComparison";
 import LeadForm from "@/components/LeadForm";
 import umrahImg from "@/assets/umrah-bg.jpg";
-import { Landmark, Hotel, Bus, BookOpen, Calendar } from "lucide-react";
+import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, Loader2 } from "lucide-react";
 import { usePackages } from "@/hooks/useGoogleSheets";
-import type { PackageData } from "@/lib/googleSheets";
-
-const fallbackPackages: PackageData[] = [
-  {
-    name: "Economy", price: "$1,800", duration: "10 Days", highlight: false,
-    features: [
-      { label: "Return Flights (Economy)", included: true },
-      { label: "Umrah Visa", included: true },
-      { label: "3-Star Hotel Makkah", included: true },
-      { label: "3-Star Hotel Madinah", included: true },
-      { label: "Shared Transport", included: true },
-      { label: "Group Ziyarat", included: true },
-      { label: "Full Board Meals", included: false },
-      { label: "Private Guide", included: false },
-    ],
-  },
-  {
-    name: "Premium", price: "$4,500", duration: "14 Days", highlight: true,
-    features: [
-      { label: "Return Flights (Business)", included: true },
-      { label: "Umrah Visa", included: true },
-      { label: "5-Star Hotel Makkah (Haram View)", included: true },
-      { label: "5-Star Hotel Madinah", included: true },
-      { label: "Private Luxury Transport", included: true },
-      { label: "Private Guided Ziyarat", included: true },
-      { label: "Full Board Gourmet Meals", included: true },
-      { label: "24/7 Personal Concierge", included: true },
-    ],
-  },
-];
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const UmrahPackages = () => {
-  const packages = usePackages("Umrah", fallbackPackages);
+  const { packages, isLoading } = usePackages("Umrah");
 
   return (
     <main className="pt-20">
@@ -74,55 +46,70 @@ const UmrahPackages = () => {
       <section className="section-padding" style={{ background: "hsl(var(--section-alt))" }}>
         <div className="container mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Compare Umrah Packages</h2>
-          <div className="overflow-x-auto pb-4 -mx-4 px-4">
-            <div className="flex gap-6" style={{ minWidth: "max-content" }}>
-              {packages.map((pkg) => (
-                <div
-                  key={pkg.name}
-                  className={`w-80 shrink-0 rounded-2xl overflow-hidden ${
-                    pkg.highlight
-                      ? "ring-2 ring-primary shadow-xl shadow-primary/10 glass-card"
-                      : "glass-card"
-                  }`}
-                >
-                  {pkg.highlight && (
-                    <div className="gradient-primary text-primary-foreground text-center text-xs font-bold py-1.5 tracking-wider uppercase">
-                      Most Popular
-                    </div>
-                  )}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-foreground mb-1">{pkg.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{pkg.duration}</p>
-                    <div className="mb-6">
-                      <span className="text-3xl font-extrabold text-foreground">{pkg.price}</span>
-                      <span className="text-sm text-muted-foreground"> / person</span>
-                    </div>
-                    <ul className="space-y-3 mb-6">
-                      {pkg.features.map((f) => (
-                        <li key={f.label} className="flex items-center gap-2.5 text-sm">
-                          {f.included ? (
-                            <span className="w-4 h-4 text-primary shrink-0">✓</span>
-                          ) : (
-                            <span className="w-4 h-4 text-muted-foreground/40 shrink-0">✕</span>
-                          )}
-                          <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>{f.label}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a href="/contact">
-                      <button className={`w-full py-2.5 rounded-lg font-semibold text-sm ${
-                        pkg.highlight
-                          ? "gradient-urgent text-destructive-foreground"
-                          : "gradient-primary text-primary-foreground"
-                      }`}>
-                        Book Now
-                      </button>
-                    </a>
-                  </div>
-                </div>
-              ))}
+
+          {isLoading && (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <span className="ml-3 text-muted-foreground">Loading packages...</span>
             </div>
-          </div>
+          )}
+
+          {!isLoading && packages.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-muted-foreground text-lg">No packages available at the moment. Check back soon!</p>
+            </div>
+          )}
+
+          {packages.length > 0 && (
+            <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-5xl mx-auto">
+              <CarouselContent className="-ml-4">
+                {packages.map((pkg) => (
+                  <CarouselItem key={pkg.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className={`rounded-2xl overflow-hidden h-full ${
+                      pkg.highlight ? "ring-2 ring-primary shadow-xl shadow-primary/10 glass-card" : "glass-card"
+                    }`}>
+                      {pkg.highlight && (
+                        <div className="gradient-primary text-primary-foreground text-center text-xs font-bold py-1.5 tracking-wider uppercase">
+                          Most Popular
+                        </div>
+                      )}
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-foreground mb-1">{pkg.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-4">{pkg.duration}</p>
+                        <div className="mb-6">
+                          <span className="text-3xl font-extrabold text-foreground">{pkg.price}</span>
+                          <span className="text-sm text-muted-foreground"> / person</span>
+                        </div>
+                        <ul className="space-y-3 mb-6">
+                          {pkg.features.map((f) => (
+                            <li key={f.label} className="flex items-center gap-2.5 text-sm">
+                              {f.included ? (
+                                <Check className="w-4 h-4 text-primary shrink-0" />
+                              ) : (
+                                <X className="w-4 h-4 text-muted-foreground/40 shrink-0" />
+                              )}
+                              <span className={f.included ? "text-foreground" : "text-muted-foreground/50"}>{f.label}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <Link to="/contact">
+                          <Button className={`w-full font-semibold ${
+                            pkg.highlight
+                              ? "gradient-urgent border-0 text-destructive-foreground hover:opacity-90"
+                              : "gradient-primary border-0 text-primary-foreground hover:opacity-90"
+                          }`}>
+                            Book Now
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
+          )}
         </div>
       </section>
 
