@@ -180,7 +180,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
 export async function fetchVisas(): Promise<VisaData[]> {
   if (!GOOGLE_SHEET_ID) return [];
 
-  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Visas");
+  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Visa");
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch visas sheet: ${res.status}`);
 
