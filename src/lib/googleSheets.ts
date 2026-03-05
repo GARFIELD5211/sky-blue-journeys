@@ -266,3 +266,44 @@ export async function fetchFlights(): Promise<FlightData[]> {
       stops: r[stopsIdx] || "",
     }));
 }
+
+/**
+ * Fetch tour data from the "Tours" tab.
+ * Expected columns: Name, Destination, Price, Duration, Description, Highlights, Included, Image
+ */
+export async function fetchTours(): Promise<TourData[]> {
+  if (!GOOGLE_SHEET_ID) return [];
+
+  const url = SHEET_CSV_URL(GOOGLE_SHEET_ID, "Tours");
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch tours sheet: ${res.status}`);
+
+  const csv = await res.text();
+  const rows = parseCSV(csv);
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map((h) => h.toLowerCase().replace(/\s+/g, "").trim());
+  const nameIdx = headers.indexOf("name");
+  const destIdx = headers.findIndex((h) => h.includes("destination"));
+  const priceIdx = headers.indexOf("price");
+  const durIdx = headers.indexOf("duration");
+  const descIdx = headers.findIndex((h) => h.includes("description"));
+  const highIdx = headers.findIndex((h) => h.includes("highlights"));
+  const inclIdx = headers.findIndex((h) => h.includes("included"));
+  const imgIdx = headers.findIndex((h) => h.includes("image"));
+
+  if (nameIdx === -1) return [];
+
+  return rows.slice(1)
+    .filter((r) => r[nameIdx])
+    .map((r) => ({
+      name: r[nameIdx] || "",
+      destination: destIdx !== -1 ? r[destIdx] || "" : "",
+      price: priceIdx !== -1 ? r[priceIdx] || "" : "",
+      duration: durIdx !== -1 ? r[durIdx] || "" : "",
+      description: descIdx !== -1 ? r[descIdx] || "" : "",
+      highlights: highIdx !== -1 ? (r[highIdx] || "").split(",").map(s => s.trim()).filter(Boolean) : [],
+      included: inclIdx !== -1 ? (r[inclIdx] || "").split(",").map(s => s.trim()).filter(Boolean) : [],
+      image: imgIdx !== -1 ? r[imgIdx] || "" : "",
+    }));
+}
