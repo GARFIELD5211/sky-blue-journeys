@@ -115,6 +115,17 @@ export interface FlightData {
   stops: string;
 }
 
+export interface TourData {
+  name: string;
+  destination: string;
+  price: string;
+  duration: string;
+  description: string;
+  highlights: string[];
+  included: string[];
+  image: string;
+}
+
 /**
  * Fetch package data from a Google Sheet tab.
  * Expected columns: Package, Price, Duration, Highlight, Feature, Included
