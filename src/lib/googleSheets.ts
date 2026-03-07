@@ -83,6 +83,12 @@ export interface PackageData {
   price: string;
   duration: string;
   highlight: boolean;
+  hotel: string;
+  distanceFromHaram: string;
+  roomSharing: string;
+  meals: string;
+  transport: string;
+  guide: string;
   features: { label: string; included: boolean }[];
 }
 
@@ -140,16 +146,24 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
   const rows = parseCSV(csv);
   if (rows.length < 2) return [];
 
-  const headers = rows[0].map((h) => h.toLowerCase().trim());
+  const headers = rows[0].map((h) => h.toLowerCase().replace(/\s+/g, "").trim());
   const pkgIdx = headers.indexOf("package");
   const priceIdx = headers.indexOf("price");
   const durationIdx = headers.indexOf("duration");
   const highlightIdx = headers.indexOf("highlight");
   const featureIdx = headers.indexOf("feature");
   const includedIdx = headers.indexOf("included");
+  const findH = (key: string) => headers.findIndex((h) => h.includes(key));
+  const hotelIdx = findH("hotel");
+  const distIdx = findH("distance");
+  const roomIdx = findH("room");
+  const mealsIdx = findH("meals");
+  const transportIdx = findH("transport");
+  const guideIdx = findH("guide");
 
   if (pkgIdx === -1 || featureIdx === -1) return [];
 
+  const getVal = (r: string[], idx: number) => idx !== -1 ? r[idx] || "" : "";
   const map = new Map<string, PackageData>();
 
   for (let i = 1; i < rows.length; i++) {
@@ -163,6 +177,12 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
         price: r[priceIdx] || "",
         duration: r[durationIdx] || "",
         highlight: isTruthy(r[highlightIdx]),
+        hotel: getVal(r, hotelIdx),
+        distanceFromHaram: getVal(r, distIdx),
+        roomSharing: getVal(r, roomIdx),
+        meals: getVal(r, mealsIdx),
+        transport: getVal(r, transportIdx),
+        guide: getVal(r, guideIdx),
         features: [],
       });
     }
