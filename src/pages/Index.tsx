@@ -4,6 +4,8 @@ import LeadForm from "@/components/LeadForm";
 import { Landmark, BookOpen, Globe, PlaneTakeoff, Hotel, Shield, Star, Users } from "lucide-react";
 import umrahImg from "@/assets/umrah-bg.jpg";
 import visaImg from "@/assets/visa-dubai.jpg";
+import hajjImg from "@/assets/hajj-packages.jpg";
+import flightImg from "@/assets/flight-ticketing.jpg";
 
 const Index = () => {
   return (
