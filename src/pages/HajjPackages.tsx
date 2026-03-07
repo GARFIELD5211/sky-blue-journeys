@@ -1,10 +1,9 @@
 import LeadForm from "@/components/LeadForm";
 import heroImg from "@/assets/hero-hajj.jpg";
-import { Landmark, Hotel, UtensilsCrossed, Bus, BookOpen, Check, X, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Landmark, Hotel, UtensilsCrossed, Bus, BookOpen, Check, X, Loader2 } from "lucide-react";
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const HajjPackages = () => {
   const { packages, isLoading } = usePackages("Hajj");
