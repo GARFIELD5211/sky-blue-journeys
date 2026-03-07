@@ -57,13 +57,12 @@ const VisaServices = () => {
             <h2 className="text-3xl font-bold text-foreground">Country-Specific Visas</h2>
             <p className="text-muted-foreground mt-2">Click any country to start your application</p>
           </div>
-          <div className="overflow-x-auto pb-4 -mx-4 px-4">
-            <div className="flex gap-6" style={{ minWidth: "max-content" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {countries.map((c) => (
                 <button
                   key={c.country}
                   onClick={() => setModal({ open: true, country: c.country })}
-                  className="glass-card-hover rounded-2xl p-6 text-left w-72 shrink-0"
+                  className="glass-card-hover rounded-2xl p-6 text-left"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-4xl">{c.flag}</span>
@@ -84,7 +83,6 @@ const VisaServices = () => {
                 </button>
               ))}
             </div>
-          </div>
         </div>
       </section>
 
