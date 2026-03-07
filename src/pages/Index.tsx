@@ -21,10 +21,10 @@ const Index = () => {
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">From sacred pilgrimages to worldwide visa processing — we handle everything so you can focus on the journey.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ServiceCard icon={Landmark} title="Hajj Packages" description="Premium & Economy Hajj packages with 5-star hotels near Haram, guided Ziyarat, and full-board meals." link="/hajj" badge="2026 Open" />
+            <ServiceCard icon={Landmark} title="Hajj Packages" description="Premium & Economy Hajj packages with 5-star hotels near Haram, guided Ziyarat, and full-board meals." link="/hajj" badge="2026 Open" image={hajjImg} />
             <ServiceCard icon={BookOpen} title="Umrah Packages" description="Year-round Umrah packages starting from 7 days. Visa, flights, hotels, and transport included." link="/umrah" image={umrahImg} />
             <ServiceCard icon={Globe} title="Visa Services" description="Tourist, Business & Work visas for UAE, UK, Turkey, Malaysia and 50+ countries. 99% success rate." link="/visas" image={visaImg} />
-            <ServiceCard icon={PlaneTakeoff} title="Flight Ticketing" description="Best rates on domestic and international flights. Group bookings and corporate deals available." link="/contact" />
+            <ServiceCard icon={PlaneTakeoff} title="Flight Ticketing" description="Best rates on domestic and international flights. Group bookings and corporate deals available." link="/flights" image={flightImg} />
             <ServiceCard icon={Hotel} title="Hotel Reservations" description="Curated hotel partnerships worldwide. From budget-friendly to luxury 5-star accommodations." link="/contact" />
             <ServiceCard icon={Shield} title="Travel Insurance" description="Comprehensive travel insurance covering medical emergencies, trip cancellation, and baggage loss." link="/contact" />
           </div>
