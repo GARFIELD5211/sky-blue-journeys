@@ -4,7 +4,6 @@ import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, Loader2 } from "luc
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const UmrahPackages = () => {
   const { packages, isLoading } = usePackages("Umrah");
