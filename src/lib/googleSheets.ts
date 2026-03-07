@@ -109,12 +109,18 @@ export interface FlightData {
 
 export interface TourData {
   name: string;
-  destination: string;
-  price: string;
+  from: string;
+  to: string;
+  packageType: string;
   duration: string;
-  description: string;
-  highlights: string[];
-  included: string[];
+  days: string;
+  hotel: string;
+  distanceFromHaram: string;
+  roomSharing: string;
+  meals: string;
+  transport: string;
+  guide: string;
+  price: string;
   image: string;
 }
 
