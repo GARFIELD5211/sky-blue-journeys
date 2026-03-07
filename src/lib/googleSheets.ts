@@ -83,6 +83,12 @@ export interface PackageData {
   price: string;
   duration: string;
   highlight: boolean;
+  hotel: string;
+  distanceFromHaram: string;
+  roomSharing: string;
+  meals: string;
+  transport: string;
+  guide: string;
   features: { label: string; included: boolean }[];
 }
 
