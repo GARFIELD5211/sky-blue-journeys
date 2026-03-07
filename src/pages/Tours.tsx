@@ -1,8 +1,9 @@
 import { useTours } from "@/hooks/useGoogleSheets";
 import LeadForm from "@/components/LeadForm";
-import { MapPin, Clock, DollarSign, Loader2 } from "lucide-react";
+import { MapPin, Clock, DollarSign, Loader2, Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 
 const Tours = () => {
   const { tours, isLoading } = useTours();
@@ -38,9 +39,9 @@ const Tours = () => {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {tours.map((tour) => (
-              <div key={tour.name} className="glass-card rounded-2xl overflow-hidden group">
+              <div key={tour.name + tour.from} className="glass-card rounded-2xl overflow-hidden group">
                 {tour.image && (
                   <div className="h-48 overflow-hidden">
                     <img
@@ -51,37 +52,69 @@ const Tours = () => {
                   </div>
                 )}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-1">{tour.name}</h3>
-                  {tour.destination && (
-                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-2">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      {tour.destination}
-                    </div>
-                  )}
-                  <div className="flex items-center gap-4 mb-3">
-                    {tour.duration && (
-                      <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4" /> {tour.duration}
-                      </span>
-                    )}
-                    {tour.price && (
-                      <span className="flex items-center gap-1 text-sm font-semibold text-foreground">
-                        <DollarSign className="w-4 h-4 text-primary" /> {tour.price}
-                      </span>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xl font-bold text-foreground">{tour.name}</h3>
+                    {tour.packageType && (
+                      <Badge variant="secondary" className="text-xs">{tour.packageType}</Badge>
                     )}
                   </div>
-                  {tour.description && (
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{tour.description}</p>
-                  )}
-                  {tour.highlights.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {tour.highlights.map((h) => (
-                        <span key={h} className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded-full">
-                          {h}
-                        </span>
-                      ))}
+
+                  {(tour.from || tour.to) && (
+                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-3">
+                      <Plane className="w-4 h-4 text-primary" />
+                      {tour.from}{tour.from && tour.to && " → "}{tour.to}
                     </div>
                   )}
+
+                  <div className="grid grid-cols-2 gap-2 mb-4 text-sm">
+                    {tour.duration && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Clock className="w-3.5 h-3.5 text-primary" /> {tour.duration}
+                      </div>
+                    )}
+                    {tour.days && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Calendar className="w-3.5 h-3.5 text-primary" /> {tour.days} Days
+                      </div>
+                    )}
+                    {tour.hotel && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Hotel className="w-3.5 h-3.5 text-primary" /> {tour.hotel}
+                      </div>
+                    )}
+                    {tour.distanceFromHaram && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <MapPin className="w-3.5 h-3.5 text-primary" /> {tour.distanceFromHaram}
+                      </div>
+                    )}
+                    {tour.roomSharing && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Users className="w-3.5 h-3.5 text-primary" /> {tour.roomSharing}
+                      </div>
+                    )}
+                    {tour.meals && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <UtensilsCrossed className="w-3.5 h-3.5 text-primary" /> {tour.meals}
+                      </div>
+                    )}
+                    {tour.transport && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Bus className="w-3.5 h-3.5 text-primary" /> {tour.transport}
+                      </div>
+                    )}
+                    {tour.guide && (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <UserCheck className="w-3.5 h-3.5 text-primary" /> {tour.guide}
+                      </div>
+                    )}
+                  </div>
+
+                  {tour.price && (
+                    <div className="flex items-center gap-1 text-lg font-bold text-foreground mb-4">
+                      <DollarSign className="w-5 h-5 text-primary" /> {tour.price}
+                    </div>
+                  )}
+
                   <Link to="/contact">
                     <Button className="w-full gradient-primary border-0 text-primary-foreground hover:opacity-90">
                       Enquire Now

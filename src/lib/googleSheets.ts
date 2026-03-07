@@ -267,7 +267,7 @@ export async function fetchFlights(): Promise<FlightData[]> {
 
 /**
  * Fetch tour data from the "Tours" tab.
- * Expected columns: Name, Destination, Price, Duration, Description, Highlights, Included, Image
+ * Expected columns: Name, From, To, PackageType, Duration, Days, Hotel, DistanceFromHaram, RoomSharing, Meals, Transport, Guide, Price, Image
  */
 export async function fetchTours(): Promise<TourData[]> {
   if (!GOOGLE_SHEET_ID) return [];
@@ -281,27 +281,42 @@ export async function fetchTours(): Promise<TourData[]> {
   if (rows.length < 2) return [];
 
   const headers = rows[0].map((h) => h.toLowerCase().replace(/\s+/g, "").trim());
-  const nameIdx = headers.indexOf("name");
-  const destIdx = headers.findIndex((h) => h.includes("destination"));
-  const priceIdx = headers.indexOf("price");
-  const durIdx = headers.indexOf("duration");
-  const descIdx = headers.findIndex((h) => h.includes("description"));
-  const highIdx = headers.findIndex((h) => h.includes("highlights"));
-  const inclIdx = headers.findIndex((h) => h.includes("included"));
-  const imgIdx = headers.findIndex((h) => h.includes("image"));
+  const find = (key: string) => headers.findIndex((h) => h.includes(key));
+  const nameIdx = find("name");
+  const fromIdx = find("from");
+  const toIdx = find("to");
+  const typeIdx = find("packagetype") !== -1 ? find("packagetype") : find("type");
+  const durIdx = find("duration");
+  const daysIdx = find("days");
+  const hotelIdx = find("hotel");
+  const distIdx = find("distance");
+  const roomIdx = find("room");
+  const mealsIdx = find("meals");
+  const transportIdx = find("transport");
+  const guideIdx = find("guide");
+  const priceIdx = find("price");
+  const imgIdx = find("image");
 
   if (nameIdx === -1) return [];
+
+  const get = (r: string[], idx: number) => idx !== -1 ? r[idx] || "" : "";
 
   return rows.slice(1)
     .filter((r) => r[nameIdx])
     .map((r) => ({
-      name: r[nameIdx] || "",
-      destination: destIdx !== -1 ? r[destIdx] || "" : "",
-      price: priceIdx !== -1 ? r[priceIdx] || "" : "",
-      duration: durIdx !== -1 ? r[durIdx] || "" : "",
-      description: descIdx !== -1 ? r[descIdx] || "" : "",
-      highlights: highIdx !== -1 ? (r[highIdx] || "").split(",").map(s => s.trim()).filter(Boolean) : [],
-      included: inclIdx !== -1 ? (r[inclIdx] || "").split(",").map(s => s.trim()).filter(Boolean) : [],
-      image: imgIdx !== -1 ? r[imgIdx] || "" : "",
+      name: get(r, nameIdx),
+      from: get(r, fromIdx),
+      to: get(r, toIdx),
+      packageType: get(r, typeIdx),
+      duration: get(r, durIdx),
+      days: get(r, daysIdx),
+      hotel: get(r, hotelIdx),
+      distanceFromHaram: get(r, distIdx),
+      roomSharing: get(r, roomIdx),
+      meals: get(r, mealsIdx),
+      transport: get(r, transportIdx),
+      guide: get(r, guideIdx),
+      price: get(r, priceIdx),
+      image: get(r, imgIdx),
     }));
 }
