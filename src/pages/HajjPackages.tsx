@@ -76,10 +76,57 @@ const HajjPackages = () => {
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-foreground mb-1">{pkg.name}</h3>
                     <p className="text-sm text-muted-foreground mb-4">{pkg.duration}</p>
-                    <div className="mb-6">
+                    <div className="mb-4">
                       <span className="text-3xl font-extrabold text-foreground">{pkg.price}</span>
                       <span className="text-sm text-muted-foreground"> / person</span>
                     </div>
+
+                    {/* Detail fields */}
+                    <div className="space-y-2 mb-4 text-sm">
+                      {pkg.hotel && (
+                        <div className="flex items-center gap-2 text-foreground">
+                          <Hotel className="w-4 h-4 text-primary shrink-0" />
+                          <span className="text-muted-foreground">Hotel:</span>
+                          <span className="font-medium">{pkg.hotel}</span>
+                        </div>
+                      )}
+                      {pkg.distanceFromHaram && (
+                        <div className="flex items-center gap-2 text-foreground">
+                          <MapPin className="w-4 h-4 text-primary shrink-0" />
+                          <span className="text-muted-foreground">Distance:</span>
+                          <span className="font-medium">{pkg.distanceFromHaram}</span>
+                        </div>
+                      )}
+                      {pkg.roomSharing && (
+                        <div className="flex items-center gap-2 text-foreground">
+                          <BedDouble className="w-4 h-4 text-primary shrink-0" />
+                          <span className="text-muted-foreground">Room:</span>
+                          <span className="font-medium">{pkg.roomSharing}</span>
+                        </div>
+                      )}
+                      {pkg.meals && (
+                        <div className="flex items-center gap-2 text-foreground">
+                          <UtensilsCrossed className="w-4 h-4 text-primary shrink-0" />
+                          <span className="text-muted-foreground">Meals:</span>
+                          <span className="font-medium">{pkg.meals}</span>
+                        </div>
+                      )}
+                      {pkg.transport && (
+                        <div className="flex items-center gap-2 text-foreground">
+                          <Bus className="w-4 h-4 text-primary shrink-0" />
+                          <span className="text-muted-foreground">Transport:</span>
+                          <span className="font-medium">{pkg.transport}</span>
+                        </div>
+                      )}
+                      {pkg.guide && (
+                        <div className="flex items-center gap-2 text-foreground">
+                          <Users className="w-4 h-4 text-primary shrink-0" />
+                          <span className="text-muted-foreground">Guide:</span>
+                          <span className="font-medium">{pkg.guide}</span>
+                        </div>
+                      )}
+                    </div>
+
                     <ul className="space-y-3 mb-6">
                       {pkg.features.map((f) => (
                         <li key={f.label} className="flex items-center gap-2.5 text-sm">
