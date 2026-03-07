@@ -1,6 +1,6 @@
 import LeadForm from "@/components/LeadForm";
 import umrahImg from "@/assets/umrah-bg.jpg";
-import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, Loader2 } from "lucide-react";
+import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, Loader2, MapPin, BedDouble, UtensilsCrossed, Users } from "lucide-react";
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
