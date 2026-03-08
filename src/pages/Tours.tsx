@@ -1,7 +1,7 @@
 import { useTours } from "@/hooks/useGoogleSheets";
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
-import { MapPin, Clock, DollarSign, Loader2, Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
+import { MapPin, Clock, DollarSign, Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
