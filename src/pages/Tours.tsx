@@ -5,6 +5,7 @@ import { MapPin, Clock, DollarSign, Plane, Hotel, Users, UtensilsCrossed, Bus, U
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { TourGridSkeleton } from "@/components/LoadingSkeletons";
 
 const Tours = () => {
   const { tours, isLoading } = useTours();
