@@ -167,12 +167,26 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
   const durationIdx = headers.indexOf("duration");
   const highlightIdx = headers.indexOf("highlight");
   const findH = (key: string) => headers.findIndex((h) => h.includes(key));
+  const findExact = (key: string) => headers.indexOf(key);
   const hotelIdx = findH("hotel");
   const distIdx = findH("distance");
   const roomIdx = findH("room");
   const mealsIdx = findH("meals");
   const transportIdx = findH("transport");
   const guideIdx = findH("guide");
+  const priceSharingIdx = findExact("pricesharing") !== -1 ? findExact("pricesharing") : findH("sharing");
+  const priceTripleIdx = findExact("pricetriple") !== -1 ? findExact("pricetriple") : findH("triple");
+  const priceDoubleIdx = findExact("pricedouble") !== -1 ? findExact("pricedouble") : findH("double");
+  const makkahHotelIdx = findExact("makkahhotel");
+  const makkahNightsIdx = findExact("makkahnights");
+  const makkahDistIdx = findExact("makkahdistance");
+  const madinaHotelIdx = findExact("madinahotel");
+  const madinaNightsIdx = findExact("madinanights");
+  const madinaDistIdx = findExact("madinadistance");
+  const flightRouteIdx = findExact("flightroute");
+  const flightScheduleIdx = findExact("flightschedule");
+  const visaIdx = findExact("visa");
+  const ticketIdx = findExact("ticket");
 
   if (pkgIdx === -1) return [];
 
