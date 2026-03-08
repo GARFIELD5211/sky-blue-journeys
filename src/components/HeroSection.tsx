@@ -49,7 +49,7 @@ const HeroSection = () => {
         </div>
 
         {/* Quick Search Bar */}
-        <div className="glass-card rounded-2xl p-4 md:p-6 max-w-4xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
+        <div className="glass-card rounded-2xl p-4 md:p-6 max-w-4xl w-full animate-fade-up" style={{ animationDelay: "0.2s" }}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
