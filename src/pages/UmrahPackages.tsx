@@ -70,7 +70,7 @@ const UmrahPackages = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {packages.map((pkg, idx) => (
                 <ScrollReveal key={pkg.name} delay={idx * 0.1}>
-                  <div className={`rounded-2xl overflow-hidden h-full ${
+                  <div className={`rounded-2xl overflow-hidden h-full border border-border transition-all duration-300 hover:border-primary ${
                     pkg.highlight ? "ring-2 ring-primary shadow-xl shadow-primary/10 glass-card" : "glass-card"
                   }`}>
                     {pkg.highlight && (

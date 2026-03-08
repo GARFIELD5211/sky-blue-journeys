@@ -43,7 +43,7 @@ const Tours = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {tours.map((tour, idx) => (
               <ScrollReveal key={tour.name + tour.from} delay={idx * 0.1}>
-                <div className="glass-card rounded-2xl overflow-hidden group h-full">
+                <div className="glass-card rounded-2xl overflow-hidden group h-full border border-border transition-all duration-300 hover:border-primary">
                   {tour.image && (
                     <div className="h-48 overflow-hidden">
                       <img
