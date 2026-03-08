@@ -95,7 +95,7 @@ const HeroSection = () => {
         </div>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap gap-6 mt-8 animate-fade-up" style={{ animationDelay: "0.4s" }}>
+        <div className="flex flex-wrap justify-center gap-6 mt-8 animate-fade-up" style={{ animationDelay: "0.4s" }}>
           {[
             { num: "15+", label: "Years Experience" },
             { num: "50K+", label: "Happy Pilgrims" },
