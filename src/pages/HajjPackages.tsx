@@ -61,12 +61,7 @@ const HajjPackages = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Compare Hajj Packages</h2>
           </ScrollReveal>
 
-          {isLoading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-3 text-muted-foreground">Loading packages...</span>
-            </div>
-          )}
+          {isLoading && <PackageGridSkeleton count={3} />}
 
           {!isLoading && packages.length === 0 && (
             <div className="text-center py-20">

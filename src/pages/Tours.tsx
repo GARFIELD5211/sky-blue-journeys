@@ -32,12 +32,7 @@ const Tours = () => {
             <h2 className="text-3xl font-bold text-foreground text-center mb-12">Available Tours</h2>
           </ScrollReveal>
 
-          {isLoading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-3 text-muted-foreground">Loading tours...</span>
-            </div>
-          )}
+          {isLoading && <TourGridSkeleton count={3} />}
 
           {!isLoading && tours.length === 0 && (
             <div className="text-center py-20">
