@@ -109,9 +109,13 @@ export interface PackageData {
 export interface VisaData {
   country: string;
   flag: string;
-  types: string[];
+  visaType: string;
+  duration: string;
+  price: string;
   processingTime: string;
   successRate: string;
+  requirements: string[];
+  types: string[]; // kept for backward compat
 }
 
 export interface FlightData {
@@ -337,7 +341,8 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
 
 /**
  * Fetch visa data from the "Visas" tab.
- * Expected columns: Country, Flag, Types, ProcessingTime, SuccessRate
+ * Expected columns: Country, Flag, VisaType, Duration, Price, ProcessingTime, SuccessRate, Requirements
+ * Requirements = semicolon-separated list e.g. "Passport with 6 months validity;Previous passport;ID Card Copy"
  */
 export async function fetchVisas(): Promise<VisaData[]> {
   if (!GOOGLE_SHEET_ID) return [];
@@ -354,8 +359,12 @@ export async function fetchVisas(): Promise<VisaData[]> {
   const countryIdx = headers.indexOf("country");
   const flagIdx = headers.indexOf("flag");
   const typesIdx = headers.indexOf("types");
+  const visaTypeIdx = headers.findIndex((h) => h === "visatype");
+  const durationIdx = headers.indexOf("duration");
+  const priceIdx = headers.indexOf("price");
   const ptIdx = headers.findIndex((h) => h.includes("processing"));
   const srIdx = headers.findIndex((h) => h.includes("success"));
+  const reqIdx = headers.findIndex((h) => h.includes("requirements"));
 
   if (countryIdx === -1) return [];
 
@@ -364,9 +373,13 @@ export async function fetchVisas(): Promise<VisaData[]> {
     .map((r) => ({
       country: r[countryIdx] || "",
       flag: r[flagIdx] || "🌍",
-      types: (r[typesIdx] || "").split(",").map((t) => t.trim()).filter(Boolean),
-      processingTime: r[ptIdx] || "",
-      successRate: r[srIdx] || "",
+      visaType: visaTypeIdx !== -1 ? (r[visaTypeIdx] || "") : "",
+      duration: durationIdx !== -1 ? (r[durationIdx] || "") : "",
+      price: priceIdx !== -1 ? (r[priceIdx] || "") : "",
+      types: typesIdx !== -1 ? (r[typesIdx] || "").split(",").map((t) => t.trim()).filter(Boolean) : [],
+      processingTime: ptIdx !== -1 ? (r[ptIdx] || "") : "",
+      successRate: srIdx !== -1 ? (r[srIdx] || "") : "",
+      requirements: reqIdx !== -1 ? (r[reqIdx] || "").split(";").map((r) => r.trim()).filter(Boolean) : [],
     }));
 }
 
