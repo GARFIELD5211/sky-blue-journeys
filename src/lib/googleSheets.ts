@@ -147,12 +147,12 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
   if (rows.length < 2) return [];
 
   const headers = rows[0].map((h) => h.toLowerCase().replace(/\s+/g, "").trim());
-  const pkgIdx = headers.indexOf("package");
+  
+  // Support both "package" and "name" as the package name column
+  const pkgIdx = headers.indexOf("package") !== -1 ? headers.indexOf("package") : headers.indexOf("name");
   const priceIdx = headers.indexOf("price");
   const durationIdx = headers.indexOf("duration");
   const highlightIdx = headers.indexOf("highlight");
-  const featureIdx = headers.indexOf("feature");
-  const includedIdx = headers.indexOf("included");
   const findH = (key: string) => headers.findIndex((h) => h.includes(key));
   const hotelIdx = findH("hotel");
   const distIdx = findH("distance");
@@ -161,11 +161,60 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
   const transportIdx = findH("transport");
   const guideIdx = findH("guide");
 
-  if (pkgIdx === -1 || featureIdx === -1) return [];
+  if (pkgIdx === -1) return [];
 
   const getVal = (r: string[], idx: number) => idx !== -1 ? r[idx] || "" : "";
-  const map = new Map<string, PackageData>();
 
+  // Check if using column-based features (Feature1, Feature2, ...) or row-based (Feature, Included)
+  const featureIdx = headers.indexOf("feature");
+  const includedIdx = headers.indexOf("included");
+  
+  // Find all Feature columns (Feature1, Feature2, Feature3, etc.)
+  const featureColIndices: number[] = [];
+  headers.forEach((h, idx) => {
+    if (/^feature\d+$/.test(h)) {
+      featureColIndices.push(idx);
+    }
+  });
+
+  const useColumnFeatures = featureColIndices.length > 0;
+
+  if (useColumnFeatures) {
+    // Column-based: each row is a package, features are in Feature1, Feature2, etc.
+    // Values like "Visa✓" = included, "Laundry✗" = not included
+    return rows.slice(1)
+      .filter((r) => r[pkgIdx])
+      .map((r) => {
+        const features = featureColIndices
+          .map((idx) => {
+            const val = r[idx] || "";
+            if (!val) return null;
+            const included = !val.includes("✗") && !val.includes("✘") && !val.toLowerCase().includes("no");
+            const label = val.replace(/[✓✗✘]/g, "").trim();
+            return { label, included };
+          })
+          .filter(Boolean) as { label: string; included: boolean }[];
+
+        return {
+          name: r[pkgIdx] || "",
+          price: getVal(r, priceIdx),
+          duration: getVal(r, durationIdx),
+          highlight: isTruthy(getVal(r, highlightIdx)),
+          hotel: getVal(r, hotelIdx),
+          distanceFromHaram: getVal(r, distIdx),
+          roomSharing: getVal(r, roomIdx),
+          meals: getVal(r, mealsIdx),
+          transport: getVal(r, transportIdx),
+          guide: getVal(r, guideIdx),
+          features,
+        };
+      });
+  }
+
+  // Row-based: multiple rows per package with Feature/Included columns
+  if (featureIdx === -1) return [];
+
+  const map = new Map<string, PackageData>();
   for (let i = 1; i < rows.length; i++) {
     const r = rows[i];
     const name = r[pkgIdx] || "";
@@ -174,9 +223,9 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
     if (!map.has(name)) {
       map.set(name, {
         name,
-        price: r[priceIdx] || "",
-        duration: r[durationIdx] || "",
-        highlight: isTruthy(r[highlightIdx]),
+        price: getVal(r, priceIdx),
+        duration: getVal(r, durationIdx),
+        highlight: isTruthy(getVal(r, highlightIdx)),
         hotel: getVal(r, hotelIdx),
         distanceFromHaram: getVal(r, distIdx),
         roomSharing: getVal(r, roomIdx),
