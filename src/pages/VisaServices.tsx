@@ -67,6 +67,7 @@ const VisaServices = () => {
               <p className="text-muted-foreground mt-2">Click any country to start your application</p>
             </div>
           </ScrollReveal>
+          {isLoading && <VisaGridSkeleton count={6} />}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {countries.map((c, idx) => (
               <ScrollReveal key={c.country} delay={idx * 0.08}>
