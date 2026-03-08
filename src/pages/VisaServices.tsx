@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Globe, Briefcase, Wrench, ArrowRight } from "lucide-react";
 import LeadModal from "@/components/LeadModal";
+import ScrollReveal from "@/components/ScrollReveal";
 import visaImg from "@/assets/visa-dubai.jpg";
 import { useVisas } from "@/hooks/useGoogleSheets";
 
@@ -23,28 +24,34 @@ const VisaServices = () => {
           <div className="hero-overlay absolute inset-0" />
         </div>
         <div className="relative z-10 container mx-auto px-4">
-          <span className="text-sm font-semibold text-primary-foreground/80 uppercase tracking-wider">99% Success Rate</span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-primary-foreground mt-2">Visa Services</h1>
-          <p className="text-lg text-primary-foreground/80 mt-3 max-w-lg">Tourist, Business & Work visas for 50+ countries. Fast processing, expert guidance, guaranteed results.</p>
+          <ScrollReveal>
+            <span className="text-sm font-semibold text-primary-foreground/80 uppercase tracking-wider">99% Success Rate</span>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-primary-foreground mt-2">Visa Services</h1>
+            <p className="text-lg text-primary-foreground/80 mt-3 max-w-lg">Tourist, Business & Work visas for 50+ countries. Fast processing, expert guidance, guaranteed results.</p>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Visa Types */}
       <section className="section-padding bg-background">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">Visa Categories</h2>
-            <p className="text-muted-foreground mt-2">Expert processing for all visa types</p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground">Visa Categories</h2>
+              <p className="text-muted-foreground mt-2">Expert processing for all visa types</p>
+            </div>
+          </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {visaTypes.map((v) => (
-              <div key={v.title} className="glass-card-hover rounded-2xl p-6 text-center">
-                <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center mx-auto mb-4">
-                  <v.icon className="w-7 h-7 text-primary-foreground" />
+            {visaTypes.map((v, idx) => (
+              <ScrollReveal key={v.title} delay={idx * 0.1}>
+                <div className="glass-card-hover rounded-2xl p-6 text-center h-full">
+                  <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center mx-auto mb-4">
+                    <v.icon className="w-7 h-7 text-primary-foreground" />
+                  </div>
+                  <h3 className="font-bold text-foreground mb-2">{v.title}</h3>
+                  <p className="text-sm text-muted-foreground">{v.desc}</p>
                 </div>
-                <h3 className="font-bold text-foreground mb-2">{v.title}</h3>
-                <p className="text-sm text-muted-foreground">{v.desc}</p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -53,16 +60,18 @@ const VisaServices = () => {
       {/* Country Cards */}
       <section className="section-padding" style={{ background: "hsl(var(--section-alt))" }}>
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">Country-Specific Visas</h2>
-            <p className="text-muted-foreground mt-2">Click any country to start your application</p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground">Country-Specific Visas</h2>
+              <p className="text-muted-foreground mt-2">Click any country to start your application</p>
+            </div>
+          </ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {countries.map((c) => (
+            {countries.map((c, idx) => (
+              <ScrollReveal key={c.country} delay={idx * 0.08}>
                 <button
-                  key={c.country}
                   onClick={() => setModal({ open: true, country: c.country })}
-                  className="glass-card-hover rounded-2xl p-6 text-left"
+                  className="glass-card-hover rounded-2xl p-6 text-left w-full"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-4xl">{c.flag}</span>
@@ -81,8 +90,9 @@ const VisaServices = () => {
                     <ArrowRight className="w-4 h-4 text-primary" />
                   </div>
                 </button>
-              ))}
-            </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
