@@ -87,7 +87,7 @@ const HajjPackages = () => {
 
                       {/* 4-Tier Pricing */}
                       {(pkg.priceSharing || pkg.priceQuad || pkg.priceTriple || pkg.priceDouble) ? (
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-5">
+                        <div className="grid grid-cols-2 gap-2 mb-5">
                           {pkg.priceSharing && (
                             <div className="rounded-xl bg-primary/10 p-3 text-center">
                               <span className="block text-[10px] font-bold text-primary uppercase tracking-wider">Sharing</span>
