@@ -76,7 +76,7 @@ const VisaServices = () => {
               <ScrollReveal key={`${c.country}-${c.visaType}-${idx}`} delay={idx * 0.05}>
                 <button
                   onClick={() => setSelectedVisa(c)}
-                  className="glass-card-hover rounded-2xl p-4 md:p-5 text-left w-full group transition-all duration-300 hover:scale-[1.02]"
+                  className="glass-card-hover rounded-2xl p-4 md:p-5 text-left w-full group transition-all duration-300 hover:scale-[1.02] border border-border"
                 >
                   <div className="flex items-center gap-2.5 mb-3">
                     <span className="text-3xl md:text-4xl">{c.flag}</span>
