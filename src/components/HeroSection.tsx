@@ -33,7 +33,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 pt-24 pb-16">
+      <div className="relative z-10 container mx-auto px-4 pt-24 pb-16 flex flex-col items-center text-center">
         <div className="max-w-3xl animate-fade-up">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 text-primary-foreground text-sm font-medium backdrop-blur-sm border border-primary-foreground/20 mb-6">
             ✦ Govt Licensed # 2421
@@ -43,7 +43,7 @@ const HeroSection = () => {
             <span className="text-gradient-primary block" style={{ WebkitTextFillColor: 'unset', color: 'hsl(200 80% 65%)' }}> Journey </span>
             Starts Here
           </h1>
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-xl mb-10">
+          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-xl mx-auto mb-10">
             Premium Hajj & Umrah packages, hassle-free visa processing, and complete travel solutions — all under one roof.
           </p>
         </div>
