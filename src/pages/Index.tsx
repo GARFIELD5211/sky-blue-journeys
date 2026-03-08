@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import LiveTrafficWidget from "@/components/LiveTrafficWidget";
 import ServiceCard from "@/components/ServiceCard";
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -27,6 +28,7 @@ const whyUs = [
 const Index = () => {
   return (
     <main>
+      <LiveTrafficWidget />
       <HeroSection />
 
       {/* Services */}
