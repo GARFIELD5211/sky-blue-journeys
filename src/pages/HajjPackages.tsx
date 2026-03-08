@@ -85,13 +85,19 @@ const HajjPackages = () => {
                       <h3 className="text-xl font-bold text-foreground mb-1">{pkg.name}</h3>
                       <p className="text-sm text-muted-foreground mb-4">{pkg.duration}</p>
 
-                      {/* 3-Tier Pricing */}
-                      {(pkg.priceSharing || pkg.priceTriple || pkg.priceDouble) ? (
-                        <div className="grid grid-cols-3 gap-2 mb-5">
+                      {/* 4-Tier Pricing */}
+                      {(pkg.priceSharing || pkg.priceQuad || pkg.priceTriple || pkg.priceDouble) ? (
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-5">
                           {pkg.priceSharing && (
                             <div className="rounded-xl bg-primary/10 p-3 text-center">
                               <span className="block text-[10px] font-bold text-primary uppercase tracking-wider">Sharing</span>
                               <span className="block text-base font-extrabold text-foreground mt-1">{pkg.priceSharing}</span>
+                            </div>
+                          )}
+                          {pkg.priceQuad && (
+                            <div className="rounded-xl bg-primary/10 p-3 text-center">
+                              <span className="block text-[10px] font-bold text-primary uppercase tracking-wider">Quad</span>
+                              <span className="block text-base font-extrabold text-foreground mt-1">{pkg.priceQuad}</span>
                             </div>
                           )}
                           {pkg.priceTriple && (

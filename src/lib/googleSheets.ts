@@ -82,6 +82,7 @@ export interface PackageData {
   name: string;
   price: string;
   priceSharing: string;
+  priceQuad: string;
   priceTriple: string;
   priceDouble: string;
   duration: string;
@@ -175,6 +176,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
   const transportIdx = findH("transport");
   const guideIdx = findH("guide");
   const priceSharingIdx = findExact("pricesharing") !== -1 ? findExact("pricesharing") : findH("sharing");
+  const priceQuadIdx = findExact("pricequad") !== -1 ? findExact("pricequad") : findH("quad");
   const priceTripleIdx = findExact("pricetriple") !== -1 ? findExact("pricetriple") : findH("triple");
   const priceDoubleIdx = findExact("pricedouble") !== -1 ? findExact("pricedouble") : findH("double");
   const makkahHotelIdx = findExact("makkahhotel");
@@ -226,6 +228,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
           name: r[pkgIdx] || "",
           price: getVal(r, priceIdx),
           priceSharing: getVal(r, priceSharingIdx),
+          priceQuad: getVal(r, priceQuadIdx),
           priceTriple: getVal(r, priceTripleIdx),
           priceDouble: getVal(r, priceDoubleIdx),
           duration: getVal(r, durationIdx),
@@ -259,6 +262,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
         name: r[pkgIdx] || "",
         price: getVal(r, priceIdx),
         priceSharing: getVal(r, priceSharingIdx),
+        priceQuad: getVal(r, priceQuadIdx),
         priceTriple: getVal(r, priceTripleIdx),
         priceDouble: getVal(r, priceDoubleIdx),
         duration: getVal(r, durationIdx),
@@ -294,6 +298,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
         name,
         price: getVal(r, priceIdx),
         priceSharing: getVal(r, priceSharingIdx),
+        priceQuad: getVal(r, priceQuadIdx),
         priceTriple: getVal(r, priceTripleIdx),
         priceDouble: getVal(r, priceDoubleIdx),
         duration: getVal(r, durationIdx),
