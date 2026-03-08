@@ -5,7 +5,7 @@ const WHATSAPP_NUMBER = "923331113882";
 const WhatsAppButton = () => {
   return (
     <a
-      href="https://api.whatsapp.com/send/?phone=923331113882&text&type=phone_number&app_absent=0"
+      href="https://api.whatsapp.com/send/?phone=923331113882&text=Hello!%20I'm%20interested%20in%20your%20travel%20services.%20Can%20you%20help%20me%3F&type=phone_number&app_absent=0"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
