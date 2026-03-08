@@ -298,6 +298,7 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
         name,
         price: getVal(r, priceIdx),
         priceSharing: getVal(r, priceSharingIdx),
+        priceQuad: getVal(r, priceQuadIdx),
         priceTriple: getVal(r, priceTripleIdx),
         priceDouble: getVal(r, priceDoubleIdx),
         duration: getVal(r, durationIdx),
