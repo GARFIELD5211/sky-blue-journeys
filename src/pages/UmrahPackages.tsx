@@ -5,6 +5,7 @@ import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, MapPin, BedDouble, 
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { PackageGridSkeleton } from "@/components/LoadingSkeletons";
 
 const highlights = [
   { icon: Landmark, label: "Visa" },
