@@ -1,10 +1,11 @@
 import { useTours } from "@/hooks/useGoogleSheets";
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
-import { MapPin, Clock, DollarSign, Loader2, Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
+import { MapPin, Clock, DollarSign, Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { TourGridSkeleton } from "@/components/LoadingSkeletons";
 
 const Tours = () => {
   const { tours, isLoading } = useTours();
@@ -31,12 +32,7 @@ const Tours = () => {
             <h2 className="text-3xl font-bold text-foreground text-center mb-12">Available Tours</h2>
           </ScrollReveal>
 
-          {isLoading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-3 text-muted-foreground">Loading tours...</span>
-            </div>
-          )}
+          {isLoading && <TourGridSkeleton count={3} />}
 
           {!isLoading && tours.length === 0 && (
             <div className="text-center py-20">

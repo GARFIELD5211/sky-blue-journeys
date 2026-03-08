@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { FlightListSkeleton } from "@/components/LoadingSkeletons";
 
 const FlightSearch = () => {
   const [searchParams] = useSearchParams();
@@ -179,9 +180,10 @@ const FlightSearch = () => {
           </ScrollReveal>
 
           <div className="flex-1 space-y-4">
-            <h2 className="text-lg font-bold text-foreground">{filtered.length} Flight{filtered.length !== 1 ? "s" : ""} Found</h2>
-
-            {filtered.length === 0 ? (
+            {!isLoading && <h2 className="text-lg font-bold text-foreground">{filtered.length} Flight{filtered.length !== 1 ? "s" : ""} Found</h2>}
+            {isLoading ? (
+              <FlightListSkeleton count={4} />
+            ) : filtered.length === 0 ? (
               <div className="glass-card rounded-2xl p-12 text-center">
                 <PlaneTakeoff className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">No flights found</h3>

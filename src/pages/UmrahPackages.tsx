@@ -1,10 +1,11 @@
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
 import umrahImg from "@/assets/umrah-bg.jpg";
-import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, Loader2, MapPin, BedDouble, UtensilsCrossed, Users } from "lucide-react";
+import { Landmark, Hotel, Bus, BookOpen, Calendar, Check, X, MapPin, BedDouble, UtensilsCrossed, Users } from "lucide-react";
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { PackageGridSkeleton } from "@/components/LoadingSkeletons";
 
 const highlights = [
   { icon: Landmark, label: "Visa" },
@@ -57,12 +58,7 @@ const UmrahPackages = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Compare Umrah Packages</h2>
           </ScrollReveal>
 
-          {isLoading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-3 text-muted-foreground">Loading packages...</span>
-            </div>
-          )}
+          {isLoading && <PackageGridSkeleton count={3} />}
 
           {!isLoading && packages.length === 0 && (
             <div className="text-center py-20">

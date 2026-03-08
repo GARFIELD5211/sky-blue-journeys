@@ -4,6 +4,7 @@ import LeadModal from "@/components/LeadModal";
 import ScrollReveal from "@/components/ScrollReveal";
 import visaImg from "@/assets/visa-dubai.jpg";
 import { useVisas } from "@/hooks/useGoogleSheets";
+import { VisaGridSkeleton } from "@/components/LoadingSkeletons";
 
 const visaTypes = [
   { icon: Globe, title: "Tourist Visa", desc: "Hassle-free tourist visas for leisure and family travel to 50+ destinations." },
@@ -66,6 +67,7 @@ const VisaServices = () => {
               <p className="text-muted-foreground mt-2">Click any country to start your application</p>
             </div>
           </ScrollReveal>
+          {isLoading && <VisaGridSkeleton count={6} />}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {countries.map((c, idx) => (
               <ScrollReveal key={c.country} delay={idx * 0.08}>
