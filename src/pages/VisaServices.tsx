@@ -87,7 +87,7 @@ const VisaServices = () => {
                       )}
                     </div>
                   </div>
-                  {c.price && (
+                  {c.price && !c.price.includes("add price") && (
                     <p className="text-sm font-bold text-primary mb-1">Rs. {c.price}</p>
                   )}
                   {c.processingTime && (
