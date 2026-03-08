@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import logoWide from "@/assets/logo-wide.png";
 
 const navLinks = [
@@ -13,6 +14,24 @@ const navLinks = [
   { to: "/flights", label: "Flights" },
   { to: "/contact", label: "Contact" },
 ];
+
+const menuVariants = {
+  closed: {
+    height: 0,
+    opacity: 0,
+    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1], when: "afterChildren" },
+  },
+  open: {
+    height: "auto",
+    opacity: 1,
+    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1], when: "beforeChildren", staggerChildren: 0.05 },
+  },
+};
+
+const linkVariants = {
+  closed: { opacity: 0, x: -16 },
+  open: { opacity: 1, x: 0, transition: { duration: 0.25, ease: "easeOut" } },
+};
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -32,13 +51,20 @@ const Navbar = () => {
             <Link
               key={l.to}
               to={l.to}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                 location.pathname === l.to
                   ? "text-primary bg-accent"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
               }`}
             >
               {l.label}
+              {location.pathname === l.to && (
+                <motion.div
+                  layoutId="activeNav"
+                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                />
+              )}
             </Link>
           ))}
         </nav>
@@ -56,46 +82,78 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button
+        <motion.button
           className="lg:hidden p-2 text-foreground"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
+          whileTap={{ scale: 0.9 }}
         >
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+          <AnimatePresence mode="wait" initial={false}>
+            {open ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="w-6 h-6" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu className="w-6 h-6" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
 
       {/* Mobile Menu */}
-      {open && (
-        <div className="lg:hidden bg-card border-b border-border animate-fade-in">
-          <nav className="container mx-auto px-4 py-4 flex flex-col gap-1">
-            {navLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                onClick={() => setOpen(false)}
-                className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                  location.pathname === l.to
-                    ? "text-primary bg-accent"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                }`}
-              >
-                {l.label}
-              </Link>
-            ))}
-            <div className="flex gap-2 mt-3 pt-3 border-t border-border">
-              <Button variant="outline" size="sm" className="flex-1 gap-2">
-                <Search className="w-4 h-4" /> Track Visa
-              </Button>
-              <Link to="/contact" className="flex-1" onClick={() => setOpen(false)}>
-                <Button size="sm" className="w-full gap-2 gradient-primary border-0 text-primary-foreground">
-                  <Phone className="w-4 h-4" /> Consult
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="lg:hidden bg-card border-b border-border overflow-hidden"
+            variants={menuVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+          >
+            <nav className="container mx-auto px-4 py-4 flex flex-col gap-1">
+              {navLinks.map((l) => (
+                <motion.div key={l.to} variants={linkVariants}>
+                  <Link
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                      location.pathname === l.to
+                        ? "text-primary bg-accent"
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div variants={linkVariants} className="flex gap-2 mt-3 pt-3 border-t border-border">
+                <Button variant="outline" size="sm" className="flex-1 gap-2">
+                  <Search className="w-4 h-4" /> Track Visa
                 </Button>
-              </Link>
-            </div>
-          </nav>
-        </div>
-      )}
+                <Link to="/contact" className="flex-1" onClick={() => setOpen(false)}>
+                  <Button size="sm" className="w-full gap-2 gradient-primary border-0 text-primary-foreground">
+                    <Phone className="w-4 h-4" /> Consult
+                  </Button>
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
