@@ -82,6 +82,7 @@ export interface PackageData {
   name: string;
   price: string;
   priceSharing: string;
+  priceQuad: string;
   priceTriple: string;
   priceDouble: string;
   duration: string;
