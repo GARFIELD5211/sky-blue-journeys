@@ -16,9 +16,9 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="lg:col-span-2 space-y-6">
               {[
-                { icon: MapPin, title: "Office Address", info: "Main Office, Blue Area,\nIslamabad, Pakistan" },
-                { icon: Phone, title: "Phone / WhatsApp", info: "+92 300 1234567\n+92 51 1234567" },
-                { icon: Mail, title: "Email", info: "info@lancertravels.com\nbooking@lancertravels.com" },
+                { icon: MapPin, title: "Office Address", info: "Office # 07-B, Mezzanine Floor\nMuzaffar Chamber Plaza,\nFazal-e-Haq Road, Blue Area,\nIslamabad" },
+                { icon: Phone, title: "Phone / WhatsApp", info: "Muhammad Taha: 0333-1113882\nNaveed Anwar: 0334-5555316 / 0316-5061665" },
+                { icon: Mail, title: "Email", info: "Lancertravel2022@gmail.com" },
                 { icon: Clock, title: "Working Hours", info: "Mon - Sat: 9:00 AM - 8:00 PM\nSunday: 10:00 AM - 4:00 PM" },
               ].map((item) => (
                 <div key={item.title} className="glass-card rounded-xl p-5 flex gap-4">
