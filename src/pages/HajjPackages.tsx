@@ -1,7 +1,7 @@
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
 import heroImg from "@/assets/hero-hajj.jpg";
-import { Landmark, Hotel, UtensilsCrossed, Bus, BookOpen, Check, X, Loader2, MapPin, BedDouble, Users } from "lucide-react";
+import { Landmark, Hotel, UtensilsCrossed, Bus, BookOpen, Check, X, MapPin, BedDouble, Users } from "lucide-react";
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
