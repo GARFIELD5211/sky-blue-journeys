@@ -28,6 +28,7 @@ const whyUs = [
 const Index = () => {
   return (
     <main>
+      <LiveTrafficWidget />
       <HeroSection />
 
       {/* Services */}
