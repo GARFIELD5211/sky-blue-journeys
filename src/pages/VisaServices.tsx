@@ -4,6 +4,7 @@ import LeadModal from "@/components/LeadModal";
 import ScrollReveal from "@/components/ScrollReveal";
 import visaImg from "@/assets/visa-dubai.jpg";
 import { useVisas } from "@/hooks/useGoogleSheets";
+import { VisaGridSkeleton } from "@/components/LoadingSkeletons";
 
 const visaTypes = [
   { icon: Globe, title: "Tourist Visa", desc: "Hassle-free tourist visas for leisure and family travel to 50+ destinations." },
