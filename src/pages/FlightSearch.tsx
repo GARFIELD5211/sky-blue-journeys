@@ -180,6 +180,7 @@ const FlightSearch = () => {
           </ScrollReveal>
 
           <div className="flex-1 space-y-4">
+            {!isLoading && <h2 className="text-lg font-bold text-foreground">{filtered.length} Flight{filtered.length !== 1 ? "s" : ""} Found</h2>}
             {isLoading ? (
               <FlightListSkeleton count={4} />
             ) : filtered.length === 0 ? (
