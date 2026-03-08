@@ -81,14 +81,27 @@ function parseCSV(csv: string): string[][] {
 export interface PackageData {
   name: string;
   price: string;
+  priceSharing: string;
+  priceTriple: string;
+  priceDouble: string;
   duration: string;
   highlight: boolean;
   hotel: string;
+  makkahHotel: string;
+  makkahNights: string;
+  makkahDistance: string;
+  madinaHotel: string;
+  madinaNights: string;
+  madinaDistance: string;
   distanceFromHaram: string;
   roomSharing: string;
   meals: string;
   transport: string;
   guide: string;
+  flightRoute: string;
+  flightSchedule: string;
+  visa: string;
+  ticket: string;
   features: { label: string; included: boolean }[];
 }
 
