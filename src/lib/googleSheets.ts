@@ -81,14 +81,27 @@ function parseCSV(csv: string): string[][] {
 export interface PackageData {
   name: string;
   price: string;
+  priceSharing: string;
+  priceTriple: string;
+  priceDouble: string;
   duration: string;
   highlight: boolean;
   hotel: string;
+  makkahHotel: string;
+  makkahNights: string;
+  makkahDistance: string;
+  madinaHotel: string;
+  madinaNights: string;
+  madinaDistance: string;
   distanceFromHaram: string;
   roomSharing: string;
   meals: string;
   transport: string;
   guide: string;
+  flightRoute: string;
+  flightSchedule: string;
+  visa: string;
+  ticket: string;
   features: { label: string; included: boolean }[];
 }
 
@@ -154,12 +167,26 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
   const durationIdx = headers.indexOf("duration");
   const highlightIdx = headers.indexOf("highlight");
   const findH = (key: string) => headers.findIndex((h) => h.includes(key));
+  const findExact = (key: string) => headers.indexOf(key);
   const hotelIdx = findH("hotel");
   const distIdx = findH("distance");
   const roomIdx = findH("room");
   const mealsIdx = findH("meals");
   const transportIdx = findH("transport");
   const guideIdx = findH("guide");
+  const priceSharingIdx = findExact("pricesharing") !== -1 ? findExact("pricesharing") : findH("sharing");
+  const priceTripleIdx = findExact("pricetriple") !== -1 ? findExact("pricetriple") : findH("triple");
+  const priceDoubleIdx = findExact("pricedouble") !== -1 ? findExact("pricedouble") : findH("double");
+  const makkahHotelIdx = findExact("makkahhotel");
+  const makkahNightsIdx = findExact("makkahnights");
+  const makkahDistIdx = findExact("makkahdistance");
+  const madinaHotelIdx = findExact("madinahotel");
+  const madinaNightsIdx = findExact("madinanights");
+  const madinaDistIdx = findExact("madinadistance");
+  const flightRouteIdx = findExact("flightroute");
+  const flightScheduleIdx = findExact("flightschedule");
+  const visaIdx = findExact("visa");
+  const ticketIdx = findExact("ticket");
 
   if (pkgIdx === -1) return [];
 
@@ -198,14 +225,27 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
         return {
           name: r[pkgIdx] || "",
           price: getVal(r, priceIdx),
+          priceSharing: getVal(r, priceSharingIdx),
+          priceTriple: getVal(r, priceTripleIdx),
+          priceDouble: getVal(r, priceDoubleIdx),
           duration: getVal(r, durationIdx),
           highlight: isTruthy(getVal(r, highlightIdx)),
           hotel: getVal(r, hotelIdx),
+          makkahHotel: getVal(r, makkahHotelIdx),
+          makkahNights: getVal(r, makkahNightsIdx),
+          makkahDistance: getVal(r, makkahDistIdx),
+          madinaHotel: getVal(r, madinaHotelIdx),
+          madinaNights: getVal(r, madinaNightsIdx),
+          madinaDistance: getVal(r, madinaDistIdx),
           distanceFromHaram: getVal(r, distIdx),
           roomSharing: getVal(r, roomIdx),
           meals: getVal(r, mealsIdx),
           transport: getVal(r, transportIdx),
           guide: getVal(r, guideIdx),
+          flightRoute: getVal(r, flightRouteIdx),
+          flightSchedule: getVal(r, flightScheduleIdx),
+          visa: getVal(r, visaIdx),
+          ticket: getVal(r, ticketIdx),
           features,
         };
       });
@@ -224,14 +264,27 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
       map.set(name, {
         name,
         price: getVal(r, priceIdx),
+        priceSharing: getVal(r, priceSharingIdx),
+        priceTriple: getVal(r, priceTripleIdx),
+        priceDouble: getVal(r, priceDoubleIdx),
         duration: getVal(r, durationIdx),
         highlight: isTruthy(getVal(r, highlightIdx)),
         hotel: getVal(r, hotelIdx),
+        makkahHotel: getVal(r, makkahHotelIdx),
+        makkahNights: getVal(r, makkahNightsIdx),
+        makkahDistance: getVal(r, makkahDistIdx),
+        madinaHotel: getVal(r, madinaHotelIdx),
+        madinaNights: getVal(r, madinaNightsIdx),
+        madinaDistance: getVal(r, madinaDistIdx),
         distanceFromHaram: getVal(r, distIdx),
         roomSharing: getVal(r, roomIdx),
         meals: getVal(r, mealsIdx),
         transport: getVal(r, transportIdx),
         guide: getVal(r, guideIdx),
+        flightRoute: getVal(r, flightRouteIdx),
+        flightSchedule: getVal(r, flightScheduleIdx),
+        visa: getVal(r, visaIdx),
+        ticket: getVal(r, ticketIdx),
         features: [],
       });
     }
