@@ -87,7 +87,7 @@ const VisaServices = () => {
                       )}
                     </div>
                   </div>
-                  {c.price && (
+                  {c.price && !c.price.includes("add price") && (
                     <p className="text-sm font-bold text-primary mb-1">Rs. {c.price}</p>
                   )}
                   {c.processingTime && (
@@ -157,7 +157,7 @@ const VisaServices = () => {
               <div className="p-6 space-y-5">
                 {/* Quick Info Row */}
                 <div className="grid grid-cols-2 gap-3">
-                  {selectedVisa.price && (
+                 {selectedVisa.price && !selectedVisa.price.includes("add price") && (
                     <div className="bg-accent/50 rounded-xl p-3 text-center">
                       <p className="text-xs text-muted-foreground">Price</p>
                       <p className="text-lg font-bold text-foreground">Rs. {selectedVisa.price}</p>
