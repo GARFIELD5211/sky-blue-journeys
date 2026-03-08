@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type MouseEvent } from "react";
 import { MessageCircle } from "lucide-react";
 
 const WHATSAPP_NUMBER = "923331113882";
