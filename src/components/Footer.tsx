@@ -60,8 +60,8 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
-                Office # 07-B, Mezzanine Floor, Muzaffar Chamber Plaza, Fazal-e-Haq Road, Blue Area, Islamabad
+                <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+                <span>Telephone: 051-2000048</span>
               </li>
               <li className="flex items-start gap-2">
                 <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
@@ -70,6 +70,10 @@ const Footer = () => {
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-primary" />
                 Lancertravel2022@gmail.com
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+                Office # 07-B, Mezzanine Floor, Muzaffar Chamber Plaza, Fazal-e-Haq Road, Blue Area, Islamabad
               </li>
             </ul>
           </div>
