@@ -61,15 +61,15 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
-                Main Office, Islamabad, Pakistan
+                Office # 07-B, Mezzanine Floor, Muzaffar Chamber Plaza, Fazal-e-Haq Road, Blue Area, Islamabad
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 shrink-0 text-primary" />
-                +92 300 1234567
+              <li className="flex items-start gap-2">
+                <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+                <span>0333-1113882<br/>0334-5555316 / 0316-5061665</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-primary" />
-                info@lancertravels.com
+                Lancertravel2022@gmail.com
               </li>
             </ul>
           </div>
