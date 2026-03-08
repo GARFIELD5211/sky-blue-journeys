@@ -11,7 +11,7 @@ const navLinks = [
   { to: "/umrah", label: "Umrah Packages" },
   { to: "/tours", label: "Tours" },
   { to: "/visas", label: "Visa Services" },
-  { to: "/flights", label: "Flights" },
+  // { to: "/flights", label: "Flights" },
   { to: "/contact", label: "Contact" },
 ];
 
