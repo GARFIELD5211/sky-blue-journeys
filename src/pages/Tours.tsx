@@ -84,11 +84,6 @@ const Tours = () => {
                           <Hotel className="w-3.5 h-3.5 text-primary" /> {tour.hotel}
                         </div>
                       )}
-                      {tour.distanceFromHaram && (
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <MapPin className="w-3.5 h-3.5 text-primary" /> {tour.distanceFromHaram}
-                        </div>
-                      )}
                       {tour.roomSharing && (
                         <div className="flex items-center gap-1.5 text-muted-foreground">
                           <Users className="w-3.5 h-3.5 text-primary" /> {tour.roomSharing}
