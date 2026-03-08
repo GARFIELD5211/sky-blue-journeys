@@ -109,9 +109,13 @@ export interface PackageData {
 export interface VisaData {
   country: string;
   flag: string;
-  types: string[];
+  visaType: string;
+  duration: string;
+  price: string;
   processingTime: string;
   successRate: string;
+  requirements: string[];
+  types: string[]; // kept for backward compat
 }
 
 export interface FlightData {
