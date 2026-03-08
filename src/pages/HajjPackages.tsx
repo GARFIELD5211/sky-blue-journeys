@@ -5,6 +5,7 @@ import { Landmark, Hotel, UtensilsCrossed, Bus, BookOpen, Check, X, MapPin, BedD
 import { usePackages } from "@/hooks/useGoogleSheets";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { PackageGridSkeleton } from "@/components/LoadingSkeletons";
 
 const inclusions = [
   { icon: Landmark, label: "Visa" },
