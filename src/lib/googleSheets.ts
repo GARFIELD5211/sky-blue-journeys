@@ -251,8 +251,37 @@ export async function fetchPackages(tabName: string): Promise<PackageData[]> {
       });
   }
 
-  // Row-based: multiple rows per package with Feature/Included columns
-  if (featureIdx === -1) return [];
+  // No feature columns found — return packages without features if we have row data
+  if (featureIdx === -1) {
+    return rows.slice(1)
+      .filter((r) => r[pkgIdx])
+      .map((r) => ({
+        name: r[pkgIdx] || "",
+        price: getVal(r, priceIdx),
+        priceSharing: getVal(r, priceSharingIdx),
+        priceTriple: getVal(r, priceTripleIdx),
+        priceDouble: getVal(r, priceDoubleIdx),
+        duration: getVal(r, durationIdx),
+        highlight: isTruthy(getVal(r, highlightIdx)),
+        hotel: getVal(r, hotelIdx),
+        makkahHotel: getVal(r, makkahHotelIdx),
+        makkahNights: getVal(r, makkahNightsIdx),
+        makkahDistance: getVal(r, makkahDistIdx),
+        madinaHotel: getVal(r, madinaHotelIdx),
+        madinaNights: getVal(r, madinaNightsIdx),
+        madinaDistance: getVal(r, madinaDistIdx),
+        distanceFromHaram: getVal(r, distIdx),
+        roomSharing: getVal(r, roomIdx),
+        meals: getVal(r, mealsIdx),
+        transport: getVal(r, transportIdx),
+        guide: getVal(r, guideIdx),
+        flightRoute: getVal(r, flightRouteIdx),
+        flightSchedule: getVal(r, flightScheduleIdx),
+        visa: getVal(r, visaIdx),
+        ticket: getVal(r, ticketIdx),
+        features: [],
+      }));
+  }
 
   const map = new Map<string, PackageData>();
   for (let i = 1; i < rows.length; i++) {
