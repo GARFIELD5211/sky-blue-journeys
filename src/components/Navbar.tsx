@@ -19,18 +19,18 @@ const menuVariants = {
   closed: {
     height: 0,
     opacity: 0,
-    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1], when: "afterChildren" },
+    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] as const, when: "afterChildren" as const },
   },
   open: {
     height: "auto",
     opacity: 1,
-    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1], when: "beforeChildren", staggerChildren: 0.05 },
+    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] as const, when: "beforeChildren" as const, staggerChildren: 0.05 },
   },
 };
 
 const linkVariants = {
   closed: { opacity: 0, x: -16 },
-  open: { opacity: 1, x: 0, transition: { duration: 0.25, ease: "easeOut" } },
+  open: { opacity: 1, x: 0, transition: { duration: 0.25 } },
 };
 
 const Navbar = () => {
