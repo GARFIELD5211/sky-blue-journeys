@@ -14,6 +14,18 @@ const visaTypes = [
   { icon: Wrench, title: "Work Visa", desc: "Complete work visa processing including document attestation and embassy coordination." },
 ];
 
+// Map common abbreviations to flag emojis
+const flagMap: Record<string, string> = {
+  "Pak": "🇵🇰",
+  "pak": "🇵🇰",
+  "PAK": "🇵🇰",
+  "AE": "🇦🇪",
+  "ae": "🇦🇪",
+  "UAE": "🇦🇪",
+};
+
+const resolveFlag = (flag: string): string => flagMap[flag.trim()] || flag;
+
 const VisaServices = () => {
   const [leadModal, setLeadModal] = useState<{ open: boolean; country?: string }>({ open: false });
   const [selectedVisa, setSelectedVisa] = useState<VisaData | null>(null);
@@ -79,7 +91,7 @@ const VisaServices = () => {
                   className="glass-card-hover rounded-2xl p-4 md:p-5 text-left w-full group transition-all duration-300 hover:scale-[1.02] border border-border hover:border-primary"
                 >
                   <div className="flex items-center gap-2.5 mb-3">
-                    <span className="text-3xl md:text-4xl">{c.flag}</span>
+                    <span className="text-3xl md:text-4xl">{resolveFlag(c.flag)}</span>
                     <div className="min-w-0">
                       <h3 className="font-bold text-foreground text-sm md:text-base truncate">{c.country}</h3>
                       {c.visaType && (
@@ -143,7 +155,7 @@ const VisaServices = () => {
                   <X className="w-4 h-4 text-primary-foreground" />
                 </button>
                 <div className="flex items-center gap-4">
-                  <span className="text-5xl">{selectedVisa.flag}</span>
+                  <span className="text-5xl">{resolveFlag(selectedVisa.flag)}</span>
                   <div>
                     <h3 className="text-2xl font-extrabold text-primary-foreground">{selectedVisa.country}</h3>
                     {selectedVisa.visaType && (
