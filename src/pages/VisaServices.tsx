@@ -14,17 +14,33 @@ const visaTypes = [
   { icon: Wrench, title: "Work Visa", desc: "Complete work visa processing including document attestation and embassy coordination." },
 ];
 
-// Map common abbreviations to flag emojis
-const flagMap: Record<string, string> = {
-  "Pak": "🇵🇰",
-  "pak": "🇵🇰",
-  "PAK": "🇵🇰",
-  "AE": "🇦🇪",
-  "ae": "🇦🇪",
-  "UAE": "🇦🇪",
+// Convert country code text to a flag image URL via flagcdn.com
+const getFlagUrl = (flag: string, size: number = 64): string => {
+  const code = flag.trim().toLowerCase();
+  // Map common abbreviations to ISO 2-letter codes
+  const codeMap: Record<string, string> = {
+    pak: "pk", pakistan: "pk",
+    uae: "ae", "united arab emirates": "ae",
+    uk: "gb", "united kingdom": "gb",
+    usa: "us", "united states": "us",
+  };
+  const iso = codeMap[code] || code;
+  return `https://flagcdn.com/w${size}/${iso}.png`;
 };
 
-const resolveFlag = (flag: string): string => flagMap[flag.trim()] || flag;
+const FlagImg = ({ flag, size = 40, className = "" }: { flag: string; size?: number; className?: string }) => (
+  <img
+    src={getFlagUrl(flag, size * 2)}
+    alt={`${flag} flag`}
+    className={className}
+    style={{ width: size, height: size * 0.67, objectFit: "cover", borderRadius: 4 }}
+    loading="lazy"
+    onError={(e) => {
+      // Fallback: hide broken image, show flag text
+      (e.target as HTMLImageElement).style.display = "none";
+    }}
+  />
+);
 
 const VisaServices = () => {
   const [leadModal, setLeadModal] = useState<{ open: boolean; country?: string }>({ open: false });
@@ -91,7 +107,7 @@ const VisaServices = () => {
                   className="glass-card-hover rounded-2xl p-4 md:p-5 text-left w-full group transition-all duration-300 hover:scale-[1.02] border border-border hover:border-primary"
                 >
                   <div className="flex items-center gap-2.5 mb-3">
-                    <span className="text-3xl md:text-4xl">{resolveFlag(c.flag)}</span>
+                    <FlagImg flag={c.flag} size={40} />
                     <div className="min-w-0">
                       <h3 className="font-bold text-foreground text-sm md:text-base truncate">{c.country}</h3>
                       {c.visaType && (
@@ -155,7 +171,7 @@ const VisaServices = () => {
                   <X className="w-4 h-4 text-primary-foreground" />
                 </button>
                 <div className="flex items-center gap-4">
-                  <span className="text-5xl">{resolveFlag(selectedVisa.flag)}</span>
+                  <FlagImg flag={selectedVisa.flag} size={56} />
                   <div>
                     <h3 className="text-2xl font-extrabold text-primary-foreground">{selectedVisa.country}</h3>
                     {selectedVisa.visaType && (
