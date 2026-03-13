@@ -171,7 +171,7 @@ const VisaServices = () => {
                   <X className="w-4 h-4 text-primary-foreground" />
                 </button>
                 <div className="flex items-center gap-4">
-                  <span className="text-5xl">{resolveFlag(selectedVisa.flag)}</span>
+                  <FlagImg flag={selectedVisa.flag} size={56} />
                   <div>
                     <h3 className="text-2xl font-extrabold text-primary-foreground">{selectedVisa.country}</h3>
                     {selectedVisa.visaType && (
