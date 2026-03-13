@@ -52,6 +52,7 @@ const App = () => (
           <AnimatedRoutes />
           <Footer />
           <WhatsAppButton />
+          <LiveTrafficWidget />
         </BrowserRouter>
       </CRMProvider>
     </TooltipProvider>
