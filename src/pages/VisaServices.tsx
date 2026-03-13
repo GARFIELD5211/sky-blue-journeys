@@ -14,6 +14,18 @@ const visaTypes = [
   { icon: Wrench, title: "Work Visa", desc: "Complete work visa processing including document attestation and embassy coordination." },
 ];
 
+// Map common abbreviations to flag emojis
+const flagMap: Record<string, string> = {
+  "Pak": "🇵🇰",
+  "pak": "🇵🇰",
+  "PAK": "🇵🇰",
+  "AE": "🇦🇪",
+  "ae": "🇦🇪",
+  "UAE": "🇦🇪",
+};
+
+const resolveFlag = (flag: string): string => flagMap[flag.trim()] || flag;
+
 const VisaServices = () => {
   const [leadModal, setLeadModal] = useState<{ open: boolean; country?: string }>({ open: false });
   const [selectedVisa, setSelectedVisa] = useState<VisaData | null>(null);
