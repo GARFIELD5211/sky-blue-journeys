@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import LiveTrafficWidget from "@/components/LiveTrafficWidget";
 import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import HajjPackages from "./pages/HajjPackages";
