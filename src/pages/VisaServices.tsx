@@ -14,17 +14,33 @@ const visaTypes = [
   { icon: Wrench, title: "Work Visa", desc: "Complete work visa processing including document attestation and embassy coordination." },
 ];
 
-// Map common abbreviations to flag emojis
-const flagMap: Record<string, string> = {
-  "Pak": "🇵🇰",
-  "pak": "🇵🇰",
-  "PAK": "🇵🇰",
-  "AE": "🇦🇪",
-  "ae": "🇦🇪",
-  "UAE": "🇦🇪",
+// Convert country code text to a flag image URL via flagcdn.com
+const getFlagUrl = (flag: string, size: number = 64): string => {
+  const code = flag.trim().toLowerCase();
+  // Map common abbreviations to ISO 2-letter codes
+  const codeMap: Record<string, string> = {
+    pak: "pk", pakistan: "pk",
+    uae: "ae", "united arab emirates": "ae",
+    uk: "gb", "united kingdom": "gb",
+    usa: "us", "united states": "us",
+  };
+  const iso = codeMap[code] || code;
+  return `https://flagcdn.com/w${size}/${iso}.png`;
 };
 
-const resolveFlag = (flag: string): string => flagMap[flag.trim()] || flag;
+const FlagImg = ({ flag, size = 40, className = "" }: { flag: string; size?: number; className?: string }) => (
+  <img
+    src={getFlagUrl(flag, size * 2)}
+    alt={`${flag} flag`}
+    className={className}
+    style={{ width: size, height: size * 0.67, objectFit: "cover", borderRadius: 4 }}
+    loading="lazy"
+    onError={(e) => {
+      // Fallback: hide broken image, show flag text
+      (e.target as HTMLImageElement).style.display = "none";
+    }}
+  />
+);
 
 const VisaServices = () => {
   const [leadModal, setLeadModal] = useState<{ open: boolean; country?: string }>({ open: false });
