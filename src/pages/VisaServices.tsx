@@ -107,7 +107,7 @@ const VisaServices = () => {
                   className="glass-card-hover rounded-2xl p-4 md:p-5 text-left w-full group transition-all duration-300 hover:scale-[1.02] border border-border hover:border-primary"
                 >
                   <div className="flex items-center gap-2.5 mb-3">
-                    <span className="text-3xl md:text-4xl">{resolveFlag(c.flag)}</span>
+                    <FlagImg flag={c.flag} size={40} />
                     <div className="min-w-0">
                       <h3 className="font-bold text-foreground text-sm md:text-base truncate">{c.country}</h3>
                       {c.visaType && (
