@@ -14,18 +14,28 @@ const visaTypes = [
   { icon: Wrench, title: "Work Visa", desc: "Complete work visa processing including document attestation and embassy coordination." },
 ];
 
-// Convert country code text to a flag image URL via flagcdn.com
+// Convert a flag value (emoji like 🇮🇩, or text like "Pak"/"UAE") to a flagcdn URL
+const emojiToIso = (flag: string): string | null => {
+  // Regional Indicator Symbols are codepoints U+1F1E6..U+1F1FF mapping to A..Z
+  const codePoints = Array.from(flag.trim()).map((c) => c.codePointAt(0) || 0);
+  const letters = codePoints
+    .filter((cp) => cp >= 0x1f1e6 && cp <= 0x1f1ff)
+    .map((cp) => String.fromCharCode(cp - 0x1f1e6 + 65));
+  if (letters.length >= 2) return (letters[0] + letters[1]).toLowerCase();
+  return null;
+};
+
 const getFlagUrl = (flag: string, size: number = 64): string => {
+  const iso = emojiToIso(flag);
+  if (iso) return `https://flagcdn.com/w${size}/${iso}.png`;
   const code = flag.trim().toLowerCase();
-  // Map common abbreviations to ISO 2-letter codes
   const codeMap: Record<string, string> = {
     pak: "pk", pakistan: "pk",
     uae: "ae", "united arab emirates": "ae",
     uk: "gb", "united kingdom": "gb",
     usa: "us", "united states": "us",
   };
-  const iso = codeMap[code] || code;
-  return `https://flagcdn.com/w${size}/${iso}.png`;
+  return `https://flagcdn.com/w${size}/${codeMap[code] || code}.png`;
 };
 
 const FlagImg = ({ flag, size = 40, className = "" }: { flag: string; size?: number; className?: string }) => (
