@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, Phone } from "lucide-react";
+import { Menu, X, Search, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import logoWide from "@/assets/logo-wide.png";
@@ -74,11 +74,11 @@ const Navbar = () => {
           <Button variant="outline" size="sm" className="gap-2">
             <Search className="w-4 h-4" /> Track Visa
           </Button>
-          <Link to="/contact">
+          <a href="https://crmlancertravelspk.netlify.app" target="_blank" rel="noopener noreferrer">
             <Button size="sm" className="gap-2 gradient-primary border-0 text-primary-foreground hover:opacity-90">
-              <Phone className="w-4 h-4" /> Book Consultation
+              <LogIn className="w-4 h-4" /> Login
             </Button>
-          </Link>
+          </a>
         </div>
 
         {/* Mobile Toggle */}
@@ -144,11 +144,11 @@ const Navbar = () => {
                 <Button variant="outline" size="sm" className="flex-1 gap-2">
                   <Search className="w-4 h-4" /> Track Visa
                 </Button>
-                <Link to="/contact" className="flex-1" onClick={() => setOpen(false)}>
+                <a href="https://crmlancertravelspk.netlify.app" target="_blank" rel="noopener noreferrer" className="flex-1" onClick={() => setOpen(false)}>
                   <Button size="sm" className="w-full gap-2 gradient-primary border-0 text-primary-foreground">
-                    <Phone className="w-4 h-4" /> Consult
+                    <LogIn className="w-4 h-4" /> Login
                   </Button>
-                </Link>
+                </a>
               </motion.div>
             </nav>
           </motion.div>
