@@ -1,7 +1,7 @@
 import { useTours } from "@/hooks/useGoogleSheets";
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
-import { MapPin, Clock, DollarSign, Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
+import { MapPin, Clock, Rs , Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -108,7 +108,7 @@ const Tours = () => {
 
                     {tour.price && (
                       <div className="flex items-center gap-1 text-lg font-bold text-foreground mb-4">
-                        <DollarSign className="w-5 h-5 text-primary" /> {tour.price}
+                        <Rs className="w-5 h-5 text-primary" /> {tour.price}
                       </div>
                     )}
 
