@@ -16,6 +16,17 @@ const Rs = ({ className = "h-5 w-5" }) => (
 const Tours = () => {
   const { tours, isLoading } = useTours();
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.target as HTMLImageElement;
+    // Hide the parent wrapper as well so there's no empty space
+    const wrapper = img.closest(".h-48");
+    if (wrapper) {
+      (wrapper as HTMLElement).style.display = "none";
+    } else {
+      img.style.display = "none";
+    }
+  };
+
   return (
     <main className="pt-20">
       {/* Hero */}
@@ -56,6 +67,7 @@ const Tours = () => {
                         src={tour.image}
                         alt={tour.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={handleImageError}
                       />
                     </div>
                   )}

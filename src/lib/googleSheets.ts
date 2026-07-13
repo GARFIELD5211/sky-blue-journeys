@@ -435,6 +435,58 @@ export async function fetchFlights(): Promise<FlightData[]> {
 }
 
 /**
+ * Convert a Google Drive URL into a thumbnail URL that works in <img> tags.
+ * Supports multiple formats:
+ *   - https://drive.google.com/uc?export=view&id=FILE_ID
+ *   - https://drive.google.com/file/d/FILE_ID/view
+ *   - https://drive.google.com/open?id=FILE_ID
+ *   - https://drive.google.com/thumbnail?id=FILE_ID&sz=...
+ * Returns the original URL if it's not a Google Drive link or if no file ID can be extracted.
+ */
+function convertGoogleDriveImageUrl(url: string): string {
+  if (!url || !url.includes("drive.google.com")) return url;
+
+  // Already a thumbnail URL — keep as-is
+  if (url.includes("/thumbnail?")) return url;
+
+  // Extract file ID from various URL formats
+  let fileId: string | null = null;
+
+  // Format: uc?export=view&id=FILE_ID  or  uc?export=download&id=FILE_ID
+  const ucMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (ucMatch) fileId = ucMatch[1];
+
+  // Format: /file/d/FILE_ID/view
+  if (!fileId) {
+    const fileMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (fileMatch) fileId = fileMatch[1];
+  }
+
+  // Format: /open?id=FILE_ID
+  if (!fileId) {
+    const openMatch = url.match(/\/open\?id=([a-zA-Z0-9_-]+)/);
+    if (openMatch) fileId = openMatch[1];
+  }
+
+  if (!fileId) return url;
+
+  // Return the thumbnail URL (reliable for <img> tags)
+  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+}
+
+/**
+ * Check if a string looks like a valid image URL (not just "YES" or other non-URL values).
+ */
+function isValidImageUrl(val: string): boolean {
+  if (!val || val.length < 5) return false;
+  const lower = val.toLowerCase().trim();
+  // Skip common non-URL placeholders
+  if (lower === "yes" || lower === "no" || lower === "true" || lower === "false" || lower === "1" || lower === "0") return false;
+  // Must start with http://, https://, or data:image/
+  return lower.startsWith("http://") || lower.startsWith("https://") || lower.startsWith("data:image/");
+}
+
+/**
  * Fetch tour data from the "Tours" tab.
  * Expected columns: Name, From, To, PackageType, Duration, Days, Hotel, DistanceFromHaram, RoomSharing, Meals, Transport, Guide, Price, Image
  */
@@ -472,20 +524,24 @@ export async function fetchTours(): Promise<TourData[]> {
 
   return rows.slice(1)
     .filter((r) => r[nameIdx])
-    .map((r) => ({
-      name: get(r, nameIdx),
-      from: get(r, fromIdx),
-      to: get(r, toIdx),
-      packageType: get(r, typeIdx),
-      duration: get(r, durIdx),
-      days: get(r, daysIdx),
-      hotel: get(r, hotelIdx),
-      distanceFromHaram: get(r, distIdx),
-      roomSharing: get(r, roomIdx),
-      meals: get(r, mealsIdx),
-      transport: get(r, transportIdx),
-      guide: get(r, guideIdx),
-      price: get(r, priceIdx),
-      image: get(r, imgIdx),
-    }));
+    .map((r) => {
+      const rawImage = get(r, imgIdx);
+      const image = isValidImageUrl(rawImage) ? convertGoogleDriveImageUrl(rawImage) : "";
+      return {
+        name: get(r, nameIdx),
+        from: get(r, fromIdx),
+        to: get(r, toIdx),
+        packageType: get(r, typeIdx),
+        duration: get(r, durIdx),
+        days: get(r, daysIdx),
+        hotel: get(r, hotelIdx),
+        distanceFromHaram: get(r, distIdx),
+        roomSharing: get(r, roomIdx),
+        meals: get(r, mealsIdx),
+        transport: get(r, transportIdx),
+        guide: get(r, guideIdx),
+        price: get(r, priceIdx),
+        image,
+      };
+    });
 }
