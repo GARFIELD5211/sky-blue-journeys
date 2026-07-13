@@ -1,11 +1,17 @@
 import { useTours } from "@/hooks/useGoogleSheets";
 import LeadForm from "@/components/LeadForm";
 import ScrollReveal from "@/components/ScrollReveal";
-import { MapPin, Clock, Rs , Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
+import { MapPin, Clock,  Plane, Hotel, Users, UtensilsCrossed, Bus, UserCheck, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { TourGridSkeleton } from "@/components/LoadingSkeletons";
+const Rs = ({ className = "h-5 w-5" }) => (
+  <span className={`inline-flex items-center justify-center font-extrabold text-sm tracking-tighter ${className}`}>
+    Rs.
+  </span>
+);
+
 
 const Tours = () => {
   const { tours, isLoading } = useTours();
