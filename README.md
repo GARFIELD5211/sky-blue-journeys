@@ -1,4 +1,4 @@
-# ✈️ Sky Blue Journeys
+# ✈️ Lancer Travels 
 
 A modern, responsive travel booking platform that helps users explore destinations, discover travel packages, and plan memorable journeys with ease.
 
@@ -8,7 +8,7 @@ A modern, responsive travel booking platform that helps users explore destinatio
 
 ## 📖 About
 
-Sky Blue Journeys is a full-stack travel website built to provide a seamless experience for travelers looking to book vacations, flights, hotels, and holiday packages. The application focuses on performance, responsive design, and an intuitive user experience across all devices.
+Lancer travel is a full-stack travel website built to provide a seamless experience for travelers looking to book vacations, flights, hotels, and holiday packages. The application focuses on performance, responsive design, and an intuitive user experience across all devices.
 
 Whether users are planning a weekend getaway or an international vacation, Sky Blue Journeys provides a clean and user-friendly interface for discovering travel opportunities.
 
