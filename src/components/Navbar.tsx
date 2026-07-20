@@ -144,7 +144,7 @@ const Navbar = () => {
                 <Button variant="outline" size="sm" className="flex-1 gap-2">
                   <Search className="w-4 h-4" /> Track Visa
                 </Button>
-                <a href="https://crmlancertravelspk.netlify.app" target="_blank" rel="noopener noreferrer" className="flex-1" onClick={() => setOpen(false)}>
+                <a href="https://crm-lancer-9gl5.vercel.app" target="_blank" rel="noopener noreferrer" className="flex-1" onClick={() => setOpen(false)}>
                   <Button size="sm" className="w-full gap-2 gradient-primary border-0 text-primary-foreground">
                     <LogIn className="w-4 h-4" /> Login
                   </Button>
